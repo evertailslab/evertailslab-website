@@ -959,6 +959,219 @@
     .ww-demo { padding: 64px 24px; }
     .ww-form-row { grid-template-columns: 1fr; }
   }
+
+  /* ── MEDIA (YouTube + Podcast) ── */
+  .media-section {
+    background: var(--bg-mid);
+    padding: 96px 48px;
+  }
+
+  .media-header {
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto 72px;
+  }
+
+  .media-header .section-title { margin-bottom: 16px; }
+
+  .media-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  .media-card {
+    background: var(--bg-surface);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .media-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--border-hover); }
+
+  .media-card-header {
+    padding: 32px 36px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .media-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .media-icon.yt  { background: rgba(255, 70, 70, 0.12); border: 1px solid rgba(255,70,70,0.2); }
+  .media-icon.pod { background: rgba(200, 212, 234, 0.08); border: 1px solid var(--border); }
+
+  .media-icon svg { width: 22px; height: 22px; }
+  .media-icon.yt  svg { color: #ff6b6b; }
+  .media-icon.pod svg { color: var(--accent); }
+
+  .media-card-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .media-card-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--white);
+    letter-spacing: -0.3px;
+  }
+
+  .media-card-body { padding: 28px 36px 36px; }
+
+  .media-card-desc {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text-soft);
+    margin-bottom: 28px;
+  }
+
+  .media-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 100px;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    letter-spacing: 0.4px;
+  }
+
+  .media-cta.yt-btn {
+    background: rgba(255,70,70,0.15);
+    color: #ff9090;
+    border: 1px solid rgba(255,70,70,0.25);
+  }
+
+  .media-cta.yt-btn:hover { background: rgba(255,70,70,0.25); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(255,70,70,0.15); }
+
+  .episode-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .episode-item {
+    padding: 20px 36px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .episode-item:last-child { border-bottom: none; }
+  .episode-item:hover { background: rgba(255,255,255,0.03); }
+
+  .episode-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .episode-num {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .episode-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-faint); }
+
+  .episode-duration {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .episode-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .episode-desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+
+  .episode-player {
+    width: 100%;
+    height: 36px;
+    border-radius: var(--radius-sm);
+    accent-color: var(--accent);
+  }
+
+  .episode-placeholder {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.04);
+    border-radius: var(--radius-sm);
+    border: 1px dashed rgba(255,255,255,0.1);
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .podcast-footer {
+    padding: 24px 36px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .podcast-platforms {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .platform-tag {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+
+  @media (max-width: 768px) {
+    .media-grid { grid-template-columns: 1fr; }
+    .media-section { padding: 64px 24px; }
+    .media-card-header, .media-card-body { padding: 24px; }
+    .episode-item { padding: 16px 24px; }
+    .podcast-footer { padding: 16px 24px; }
+  }
 </style>
 </head>
 <body>
@@ -975,6 +1188,7 @@
     <li><a href="#products">Products</a></li>
     <li><a href="#values">Values</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="#media">Media</a></li>
     <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
   </ul>
   <button class="nav-hamburger" aria-label="Menu" onclick="this.classList.toggle('open')">
@@ -1269,7 +1483,7 @@
         <h3 class="section-title">See WARDWISE <em>in action.</em></h3>
         <p class="section-body" style="margin: 12px auto 0; text-align:center;">Tell us about your institution and we'll set up a walkthrough tailored to your program.</p>
       </div>
-      <form class="ww-form" action="https://formspree.io/f/xjglzjbk" method="POST">
+      <form class="ww-form" action="mailto:jennifer@evertailslab.com" method="post" enctype="text/plain">
         <div class="ww-form-row">
           <div class="ww-form-group">
             <label class="ww-form-label">Full Name</label>
@@ -1387,6 +1601,102 @@
   </div>
 </section>
 
+<!-- MEDIA -->
+<section class="media-section" id="media">
+  <div class="media-header fade-up">
+    <div class="section-eyebrow">Media &amp; Content</div>
+    <h2 class="section-title">Learn, listen, <em>and grow.</em></h2>
+    <p class="section-body" style="margin: 12px auto 0; text-align:center;">Follow our work on YouTube and tune in to conversations on healthcare innovation, nursing education, and responsible technology.</p>
+  </div>
+
+  <div class="media-grid">
+
+    <!-- YouTube Card -->
+    <div class="media-card fade-up">
+      <div class="media-card-header">
+        <div class="media-icon yt">
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 0 0-2.1 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="media-card-label">YouTube</div>
+          <div class="media-card-title">EverTails Lab</div>
+        </div>
+      </div>
+      <div class="media-card-body">
+        <p class="media-card-desc">Clinical walkthroughs, WARDWISE tutorials, nursing education insights, and conversations on healthcare innovation — all on our YouTube channel.</p>
+        <!-- REPLACE THE href BELOW WITH YOUR ACTUAL YOUTUBE CHANNEL URL -->
+        <a href="https://www.youtube.com/@EverTailsLab" target="_blank" rel="noopener" class="media-cta yt-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 0 0-2.1 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
+          Visit Our Channel
+        </a>
+      </div>
+    </div>
+
+    <!-- Podcast Card -->
+    <div class="media-card fade-up">
+      <div class="media-card-header">
+        <div class="media-icon pod">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        </div>
+        <div>
+          <div class="media-card-label">Podcast</div>
+          <div class="media-card-title">EverTails Rounds</div>
+        </div>
+      </div>
+
+      <!-- EPISODE LIST — add/remove episode-item blocks as needed -->
+      <div class="episode-list">
+
+        <!-- EPISODE TEMPLATE — duplicate this block for each new episode
+        <div class="episode-item">
+          <div class="episode-meta">
+            <span class="episode-num">Ep. 01</span>
+            <span class="episode-dot"></span>
+            <span class="episode-duration">28 min</span>
+          </div>
+          <div class="episode-title">Your Episode Title Here</div>
+          <div class="episode-desc">A short one-line description of what this episode covers.</div>
+          <audio class="episode-player" controls>
+            <source src="podcast/episode-01.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+        -->
+
+        <!-- COMING SOON placeholder — remove this once you have episodes -->
+        <div class="episode-item">
+          <div class="episode-meta">
+            <span class="episode-num">Coming Soon</span>
+          </div>
+          <div class="episode-title">Episode 01 — Launching Soon</div>
+          <div class="episode-desc">Our first episode is in production. Subscribe to be notified when it drops.</div>
+          <div class="episode-placeholder">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Audio coming soon — episode in production
+          </div>
+        </div>
+
+      </div>
+
+      <div class="podcast-footer">
+        <div class="podcast-platforms">
+          <span>Available on</span>
+          <span class="platform-tag">Spotify</span>
+          <span class="platform-tag">Apple Podcasts</span>
+          <span class="platform-tag">YouTube</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="contact-inner">
@@ -1404,13 +1714,9 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <div style="display:flex; align-items:center; gap:10px;">
+      <div style="display:flex; align-items:center;">
         <div class="logo-mark">
           <img src="Evertailslogo.png" alt="EverTails Lab">
-        </div>
-        <div class="logo-wordmark">
-          <span class="brand">EverTails Lab</span>
-          <span class="sub">Healthcare Innovation</span>
         </div>
       </div>
       <p class="footer-tagline">Building meaningful technologies for a stronger, safer healthcare world.</p>
@@ -1430,6 +1736,13 @@
           <li><a href="#mission">Mission</a></li>
           <li><a href="#values">Values</a></li>
           <li><a href="#about">Advisory Board</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Media</div>
+        <ul class="footer-links">
+          <li><a href="#media">YouTube</a></li>
+          <li><a href="#media">Podcast</a></li>
         </ul>
       </div>
       <div>
