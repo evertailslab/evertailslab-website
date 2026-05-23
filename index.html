@@ -1627,7 +1627,7 @@
         <h3 class="section-title">See WARDWISE <em>in action.</em></h3>
         <p class="section-body" style="margin: 12px auto 0; text-align:center;">Tell us about your institution and we'll set up a walkthrough tailored to your program.</p>
       </div>
-      <form class="ww-form" action="mailto:jennifer@evertailslab.com" method="post" enctype="text/plain">
+      <form class="ww-form" id="demoForm" onsubmit="submitToGmail(event)">
         <div class="ww-form-row">
           <div class="ww-form-group">
             <label class="ww-form-label">Full Name</label>
@@ -1924,6 +1924,39 @@ window.addEventListener('scroll', () => {
   document.querySelector('nav').style.boxShadow =
     window.scrollY > 20 ? '0 4px 32px rgba(0,0,0,0.4)' : 'none';
 });
+
+// Submit demo form via Gmail
+function submitToGmail(event) {
+  event.preventDefault();
+  var form = document.getElementById('demoForm');
+  var name        = form.querySelector('[name="name"]').value;
+  var email       = form.querySelector('[name="email"]').value;
+  var institution = form.querySelector('[name="institution"]').value;
+  var country     = form.querySelector('[name="country"]').value;
+  var role        = form.querySelector('[name="role"]').value;
+  var message     = form.querySelector('[name="message"]').value;
+
+  var subject = 'WARDWISE Demo Request - ' + name;
+  var body =
+    'Name: ' + name + '
+' +
+    'Email: ' + email + '
+' +
+    'Institution: ' + institution + '
+' +
+    'Country: ' + country + '
+' +
+    'Role: ' + role + '
+
+' +
+    'Message:
+' + message;
+
+  var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=jennifer@evertailslab.com&su=' +
+    encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+  window.open(gmailUrl, '_blank');
+}
 
 // Pricing toggle
 function togglePricing() {
