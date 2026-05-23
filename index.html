@@ -1627,7 +1627,11 @@
         <h3 class="section-title">See WARDWISE <em>in action.</em></h3>
         <p class="section-body" style="margin: 12px auto 0; text-align:center;">Tell us about your institution and we'll set up a walkthrough tailored to your program.</p>
       </div>
-      <form class="ww-form" id="demoForm" onsubmit="submitToGmail(event)">
+      <form class="ww-form" id="demoForm" onsubmit="submitForm(event)">
+        <input type="hidden" name="access_key" value="c8b69ecb-977d-43ef-ab4c-bd4540ed6311">
+        <input type="hidden" name="subject" value="New WARDWISE Demo Request">
+        <input type="hidden" name="from_name" value="EverTails Lab Website">
+        <input type="hidden" name="redirect" value="false">
         <div class="ww-form-row">
           <div class="ww-form-group">
             <label class="ww-form-label">Full Name</label>
@@ -1670,7 +1674,10 @@
           <label class="ww-form-label">Message</label>
           <textarea name="message" class="ww-form-textarea" placeholder="Tell us about your program — number of students, current challenges, or what you'd like to see in the demo."></textarea>
         </div>
-        <button type="submit" class="ww-form-submit">Send Demo Request →</button>
+        <button type="submit" class="ww-form-submit" id="submitBtn">Send Demo Request →</button>
+        <div id="formSuccess" style="display:none; margin-top:16px; padding:16px 20px; background:rgba(126,206,196,0.1); border:1px solid rgba(126,206,196,0.3); border-radius:12px; color:#7ECEC4; font-size:14px;">
+          ✓ Your demo request has been sent to jennifer@evertailslab.com. We'll be in touch shortly!
+        </div>
       </form>
     </div>
   </div>
@@ -1914,60 +1921,58 @@
 
 <script>
 // Fade-in on scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.12 });
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+document.querySelectorAll('.fade-up').forEach(function(el) { observer.observe(el); });
 
 // Nav shadow on scroll
-window.addEventListener('scroll', () => {
+window.addEventListener('scroll', function() {
   document.querySelector('nav').style.boxShadow =
     window.scrollY > 20 ? '0 4px 32px rgba(0,0,0,0.4)' : 'none';
 });
 
-// Submit demo form via Gmail
-function submitToGmail(event) {
+// Submit demo form via Web3Forms
+function submitForm(event) {
   event.preventDefault();
   var form = document.getElementById('demoForm');
-  var name        = form.querySelector('[name="name"]').value;
-  var email       = form.querySelector('[name="email"]').value;
-  var institution = form.querySelector('[name="institution"]').value;
-  var country     = form.querySelector('[name="country"]').value;
-  var role        = form.querySelector('[name="role"]').value;
-  var message     = form.querySelector('[name="message"]').value;
-
-  var subject = 'WARDWISE Demo Request - ' + name;
-  var body =
-    'Name: ' + name + '
-' +
-    'Email: ' + email + '
-' +
-    'Institution: ' + institution + '
-' +
-    'Country: ' + country + '
-' +
-    'Role: ' + role + '
-
-' +
-    'Message:
-' + message;
-
-  var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=jennifer@evertailslab.com&su=' +
-    encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-
-  window.open(gmailUrl, '_blank');
+  var btn = document.getElementById('submitBtn');
+  var successMsg = document.getElementById('formSuccess');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  var data = new FormData(form);
+  fetch('https://api.web3forms.com/submit', { method: 'POST', body: data })
+    .then(function(res) { return res.json(); })
+    .then(function(json) {
+      if (json.success) {
+        form.reset();
+        successMsg.style.display = 'block';
+        btn.textContent = 'Sent!';
+      } else {
+        btn.textContent = 'Send Demo Request';
+        btn.disabled = false;
+        alert('Something went wrong. Please email jennifer@evertailslab.com directly.');
+      }
+    })
+    .catch(function() {
+      btn.textContent = 'Send Demo Request';
+      btn.disabled = false;
+      alert('Something went wrong. Please email jennifer@evertailslab.com directly.');
+    });
 }
 
 // Pricing toggle
 function togglePricing() {
   var panel = document.getElementById('pricingPanel');
-  var btn   = document.getElementById('pricingToggle');
-  var open  = panel.classList.contains('open');
+  var btn = document.getElementById('pricingToggle');
+  var isOpen = panel.classList.contains('open');
   panel.classList.toggle('open');
   btn.classList.toggle('open');
-  btn.innerHTML = open
-    ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg> View Pricing Plans'
-    : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 15l-6-6-6 6"/></svg> Hide Pricing Plans';
+  if (isOpen) {
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg> View Pricing Plans';
+  } else {
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 15l-6-6-6 6"/></svg> Hide Pricing Plans';
+  }
 }
 
 // Podcast audio upload
@@ -1975,31 +1980,27 @@ var episodeCount = 0;
 function handlePodcastUpload(event) {
   var files = event.target.files;
   if (!files.length) return;
-  var list  = document.getElementById('episodeList');
+  var list = document.getElementById('episodeList');
   var empty = document.getElementById('episodeEmpty');
   if (empty) empty.style.display = 'none';
-
   Array.prototype.forEach.call(files, function(file) {
     episodeCount++;
-    var url   = URL.createObjectURL(file);
-    var ext   = file.name.split('.').pop().toUpperCase();
+    var url = URL.createObjectURL(file);
+    var ext = file.name.split('.').pop().toUpperCase();
     var sizeMB = (file.size / (1024 * 1024)).toFixed(1);
-    var item  = document.createElement('div');
+    var item = document.createElement('div');
     item.className = 'episode-item';
     item.innerHTML =
       '<div class="episode-meta">' +
         '<span class="episode-num">Ep. ' + (episodeCount < 10 ? '0' + episodeCount : episodeCount) + '</span>' +
         '<span class="episode-dot"></span>' +
-        '<span class="episode-duration">' + ext + ' &middot; ' + sizeMB + ' MB</span>' +
+        '<span class="episode-duration">' + ext + ' - ' + sizeMB + ' MB</span>' +
       '</div>' +
-      '<div class="episode-title" contenteditable="true">Episode ' + episodeCount + ' &mdash; Click to edit title</div>' +
+      '<div class="episode-title" contenteditable="true">Episode ' + episodeCount + ' - Click to edit title</div>' +
       '<div class="episode-desc" contenteditable="true">Click to add a short description for this episode.</div>' +
-      '<audio class="episode-player" controls>' +
-        '<source src="' + url + '">' +
-      '</audio>';
+      '<audio class="episode-player" controls><source src="' + url + '"></audio>';
     list.appendChild(item);
   });
-
   document.getElementById('uploadLabel').textContent = 'Upload Another Episode';
   event.target.value = '';
 }
@@ -2008,25 +2009,24 @@ function handlePodcastUpload(event) {
 function handleGalleryUpload(event) {
   var files = event.target.files;
   if (!files.length) return;
-  var grid  = document.getElementById('galleryGrid');
+  var grid = document.getElementById('galleryGrid');
   var empty = document.getElementById('galleryEmpty');
   if (empty) empty.style.display = 'none';
-
   Array.prototype.forEach.call(files, function(file) {
     if (!file.type.startsWith('image/')) return;
-    var url  = URL.createObjectURL(file);
+    var url = URL.createObjectURL(file);
     var item = document.createElement('div');
     item.className = 'gallery-item';
     item.innerHTML =
       '<img src="' + url + '" alt="' + file.name + '" loading="lazy">' +
-      '<button class="gallery-item-remove" onclick="this.parentElement.remove(); checkGalleryEmpty();" title="Remove">&times;</button>';
+      '<button class="gallery-item-remove" onclick="this.parentElement.remove();checkGalleryEmpty();" title="Remove">&times;</button>';
     grid.appendChild(item);
   });
   event.target.value = '';
 }
 
 function checkGalleryEmpty() {
-  var grid  = document.getElementById('galleryGrid');
+  var grid = document.getElementById('galleryGrid');
   var items = grid.querySelectorAll('.gallery-item');
   if (items.length === 0) {
     var empty = document.getElementById('galleryEmpty');
