@@ -872,6 +872,40 @@
   .ww-pricing-card.featured .ww-pricing-cta:hover { background: var(--bg-surface); }
 
   .ww-pricing-note { text-align: center; margin-top: 32px; font-size: 13px; font-weight: 300; color: var(--text-muted); }
+
+  /* Collapsible pricing */
+  .ww-pricing-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 auto 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 14px 32px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  }
+  .ww-pricing-toggle:hover { background: rgba(255,255,255,0.1); border-color: var(--border-hover); transform: translateY(-1px); }
+  .ww-pricing-toggle svg { transition: transform 0.3s; }
+  .ww-pricing-toggle.open svg { transform: rotate(180deg); }
+
+  .ww-pricing-collapsible {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+    opacity: 0;
+  }
+  .ww-pricing-collapsible.open {
+    max-height: 1200px;
+    opacity: 1;
+  }
   .ww-pricing-note a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(200,212,234,0.3); }
 
   /* Demo Form */
@@ -1172,6 +1206,105 @@
     .episode-item { padding: 16px 24px; }
     .podcast-footer { padding: 16px 24px; }
   }
+
+  /* ── PODCAST UPLOAD ── */
+  .episode-empty-state {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    padding: 32px 24px; text-align: center;
+    color: var(--text-muted); font-size: 13px; font-weight: 300; line-height: 1.6;
+  }
+  .episode-empty-state svg { color: var(--text-faint); }
+
+  .podcast-upload-area {
+    margin: 0 20px 20px;
+  }
+
+  .podcast-upload-label {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    padding: 20px; border-radius: var(--radius-md);
+    border: 1.5px dashed rgba(126,206,196,0.3);
+    background: rgba(126,206,196,0.04);
+    cursor: pointer; transition: border-color 0.2s, background 0.2s;
+    text-align: center;
+  }
+  .podcast-upload-label:hover { border-color: rgba(126,206,196,0.6); background: rgba(126,206,196,0.08); }
+  .podcast-upload-label svg { color: #7ECEC4; }
+
+  #uploadLabel {
+    font-size: 13px; font-weight: 500; color: #7ECEC4; letter-spacing: 0.3px;
+  }
+
+  .podcast-upload-formats {
+    font-size: 10px; font-weight: 300; color: var(--text-faint); letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  /* ── MEDIA GALLERY ── */
+  .media-gallery-wrap {
+    max-width: 1100px;
+    margin: 64px auto 0;
+    padding: 0 48px 80px;
+  }
+
+  .media-gallery-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .gallery-upload-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 500;
+    color: var(--accent); background: rgba(200,212,234,0.08);
+    border: 1px solid rgba(200,212,234,0.2);
+    padding: 10px 20px; border-radius: 100px;
+    cursor: pointer; transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    letter-spacing: 0.3px;
+  }
+  .gallery-upload-btn:hover { background: rgba(200,212,234,0.15); border-color: rgba(200,212,234,0.4); transform: translateY(-1px); }
+
+  .media-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .gallery-empty {
+    grid-column: 1 / -1;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    padding: 64px 24px; text-align: center;
+    border: 1.5px dashed var(--border);
+    border-radius: var(--radius-lg);
+    color: var(--text-muted); font-size: 14px; font-weight: 300; line-height: 1.7;
+  }
+  .gallery-empty svg { color: var(--text-faint); }
+
+  .gallery-item {
+    position: relative; border-radius: var(--radius-md); overflow: hidden;
+    aspect-ratio: 1; border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: var(--bg-surface);
+  }
+  .gallery-item:hover { transform: scale(1.02); box-shadow: var(--shadow-md); }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .gallery-item-remove {
+    position: absolute; top: 8px; right: 8px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(7,10,18,0.75); border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; opacity: 0; transition: opacity 0.2s;
+    color: var(--white); font-size: 14px; line-height: 1;
+  }
+  .gallery-item:hover .gallery-item-remove { opacity: 1; }
+
+  @media (max-width: 768px) {
+    .media-gallery-wrap { padding: 0 24px 64px; }
+    .media-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
 </style>
 </head>
 <body>
@@ -1180,7 +1313,7 @@
 <nav>
   <a href="#" class="nav-logo">
     <div class="logo-mark">
-      <img src="Evertailslogo.png" alt="EverTails Lab">
+      <img src="Evertailslogo.png" alt="" onerror="this.style.display='none'">
     </div>
     <div class="logo-wordmark">
       <span class="brand">EverTails Lab</span>
@@ -1269,19 +1402,19 @@
   </div>
   <div class="mission-right">
     <div class="mission-card">
-      <div class="card-num">52</div>
-      <div class="card-label">Clinical Scenarios</div>
-      <div class="card-sublabel">Across 10 specialties</div>
+      <div class="card-num">2</div>
+      <div class="card-label">Countries Served</div>
+      <div class="card-sublabel">Philippines &amp; United Arab Emirates</div>
     </div>
     <div class="mission-card">
-      <div class="card-num">10</div>
-      <div class="card-label">Specialty Domains</div>
-      <div class="card-sublabel">Fully validated</div>
+      <div class="card-num">1</div>
+      <div class="card-label">Flagship Product</div>
+      <div class="card-sublabel">WARDWISE — clinical simulation platform</div>
     </div>
     <div class="mission-card tall">
-      <div class="card-num">2026</div>
-      <div class="card-label">Standards Aligned</div>
-      <div class="card-sublabel">AHA · ANA · ACOG · KDIGO · SSC and more</div>
+      <div class="card-num">100%</div>
+      <div class="card-label">Evidence-Based</div>
+      <div class="card-sublabel">Built on international clinical standards</div>
     </div>
     <div class="mission-card accent">
       <div class="card-num">∞</div>
@@ -1412,6 +1545,13 @@
       <h3 class="section-title">Built for institutions, <em>priced to scale.</em></h3>
       <p class="section-body" style="margin: 0 auto; text-align:center;">All plans include full access to 52 clinical scenarios, student performance tracking, and cohort management.</p>
     </div>
+    <div class="ww-pricing-toggle-wrap" style="text-align:center;">
+      <button class="ww-pricing-toggle" id="pricingToggle" onclick="togglePricing()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        View Pricing Plans
+      </button>
+    </div>
+    <div class="ww-pricing-collapsible" id="pricingPanel">
     <div class="ww-pricing-grid">
       <div class="ww-pricing-card fade-up">
         <div class="ww-tier-label">Starter</div>
@@ -1476,7 +1616,7 @@
         <a href="mailto:jennifer@evertailslab.com?subject=WARDWISE Enterprise Inquiry" class="ww-pricing-cta">Contact us</a>
       </div>
     </div>
-    <p class="ww-pricing-note">🇵🇭 Philippine nursing schools: pricing available in PHP (₱120k–₱200k/year). <a href="mailto:jennifer@evertailslab.com?subject=PHP Pricing Inquiry">Contact us</a> for a localized quote.</p>
+
   </div>
 
   <!-- Demo Request Form -->
@@ -1487,7 +1627,7 @@
         <h3 class="section-title">See WARDWISE <em>in action.</em></h3>
         <p class="section-body" style="margin: 12px auto 0; text-align:center;">Tell us about your institution and we'll set up a walkthrough tailored to your program.</p>
       </div>
-      <form class="ww-form" action="mailto:jennifer@evertailslab.com" method="post" enctype="text/plain">
+      <form class="ww-form" action="https://formspree.io/f/jennifer@evertailslab.com" method="POST">
         <div class="ww-form-row">
           <div class="ww-form-group">
             <label class="ww-form-label">Full Name</label>
@@ -1631,7 +1771,7 @@
       <div class="media-card-body">
         <p class="media-card-desc">Clinical walkthroughs, WARDWISE tutorials, nursing education insights, and conversations on healthcare innovation — all on our YouTube channel.</p>
         <!-- REPLACE THE href BELOW WITH YOUR ACTUAL YOUTUBE CHANNEL URL -->
-        <a href="https://www.youtube.com/@EverTailsLab" target="_blank" rel="noopener" class="media-cta yt-btn">
+        <a href="https://www.youtube.com/@EverTailLabs" target="_blank" rel="noopener" class="media-cta yt-btn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 0 0-2.1 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/></svg>
           Visit Our Channel
         </a>
@@ -1651,41 +1791,26 @@
         </div>
         <div>
           <div class="media-card-label">Podcast</div>
-          <div class="media-card-title">EverTails Rounds</div>
+          <div class="media-card-title">The EverTails Pulse</div>
         </div>
       </div>
 
-      <!-- EPISODE LIST — add/remove episode-item blocks as needed -->
-      <div class="episode-list">
-
-        <!-- EPISODE TEMPLATE — duplicate this block for each new episode
-        <div class="episode-item">
-          <div class="episode-meta">
-            <span class="episode-num">Ep. 01</span>
-            <span class="episode-dot"></span>
-            <span class="episode-duration">28 min</span>
-          </div>
-          <div class="episode-title">Your Episode Title Here</div>
-          <div class="episode-desc">A short one-line description of what this episode covers.</div>
-          <audio class="episode-player" controls>
-            <source src="podcast/episode-01.mp3" type="audio/mpeg">
-          </audio>
+      <!-- EPISODE LIST -->
+      <div class="episode-list" id="episodeList">
+        <div class="episode-empty-state" id="episodeEmpty">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          <p>Episodes coming soon.<br>Upload your first audio file below.</p>
         </div>
-        -->
+      </div>
 
-        <!-- COMING SOON placeholder — remove this once you have episodes -->
-        <div class="episode-item">
-          <div class="episode-meta">
-            <span class="episode-num">Coming Soon</span>
-          </div>
-          <div class="episode-title">Episode 01 — Launching Soon</div>
-          <div class="episode-desc">Our first episode is in production. Subscribe to be notified when it drops.</div>
-          <div class="episode-placeholder">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            Audio coming soon — episode in production
-          </div>
-        </div>
-
+      <!-- UPLOAD AREA -->
+      <div class="podcast-upload-area" id="podcastUploadArea">
+        <label class="podcast-upload-label" for="podcastFileInput">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span id="uploadLabel">Upload Audio Episode</span>
+          <span class="podcast-upload-formats">MP3 · MP4 · M4A · WAV · OGG · AAC</span>
+        </label>
+        <input type="file" id="podcastFileInput" accept="audio/*,.mp3,.mp4,.m4a,.wav,.ogg,.aac" style="display:none" onchange="handlePodcastUpload(event)">
       </div>
 
       <div class="podcast-footer">
@@ -1699,6 +1824,28 @@
     </div>
 
   </div>
+
+  <!-- MEDIA GALLERY -->
+  <div class="media-gallery-wrap fade-up">
+    <div class="media-gallery-header">
+      <div>
+        <div class="section-eyebrow" style="margin-bottom:8px;">Photo Gallery</div>
+        <h3 class="section-title" style="font-size:clamp(22px,2.5vw,32px);">Moments &amp; <em>milestones.</em></h3>
+      </div>
+      <label class="gallery-upload-btn" for="galleryInput">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Add Image
+      </label>
+      <input type="file" id="galleryInput" accept="image/*" multiple style="display:none" onchange="handleGalleryUpload(event)">
+    </div>
+    <div class="media-gallery-grid" id="galleryGrid">
+      <div class="gallery-empty" id="galleryEmpty">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <p>Your gallery is empty.<br>Click "Add Image" to upload photos.</p>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <!-- CONTACT -->
@@ -1720,7 +1867,7 @@
     <div class="footer-brand">
       <div style="display:flex; align-items:center;">
         <div class="logo-mark">
-          <img src="Evertailslogo.png" alt="EverTails Lab">
+          <img src="Evertailslogo.png" alt="EverTails Lab" onerror="this.style.display='none'">
         </div>
       </div>
       <p class="footer-tagline">Building meaningful technologies for a stronger, safer healthcare world.</p>
@@ -1766,16 +1913,93 @@
 </footer>
 
 <script>
+// Fade-in on scroll
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.12 });
-
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
+// Nav shadow on scroll
 window.addEventListener('scroll', () => {
-  const nav = document.querySelector('nav');
-  nav.style.boxShadow = window.scrollY > 20 ? '0 4px 32px rgba(0,0,0,0.4)' : 'none';
+  document.querySelector('nav').style.boxShadow =
+    window.scrollY > 20 ? '0 4px 32px rgba(0,0,0,0.4)' : 'none';
 });
+
+// Pricing toggle
+function togglePricing() {
+  var panel = document.getElementById('pricingPanel');
+  var btn   = document.getElementById('pricingToggle');
+  var open  = panel.classList.contains('open');
+  panel.classList.toggle('open');
+  btn.classList.toggle('open');
+  btn.innerHTML = open
+    ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg> View Pricing Plans'
+    : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 15l-6-6-6 6"/></svg> Hide Pricing Plans';
+}
+
+// Podcast audio upload
+var episodeCount = 0;
+function handlePodcastUpload(event) {
+  var files = event.target.files;
+  if (!files.length) return;
+  var list  = document.getElementById('episodeList');
+  var empty = document.getElementById('episodeEmpty');
+  if (empty) empty.style.display = 'none';
+
+  Array.prototype.forEach.call(files, function(file) {
+    episodeCount++;
+    var url   = URL.createObjectURL(file);
+    var ext   = file.name.split('.').pop().toUpperCase();
+    var sizeMB = (file.size / (1024 * 1024)).toFixed(1);
+    var item  = document.createElement('div');
+    item.className = 'episode-item';
+    item.innerHTML =
+      '<div class="episode-meta">' +
+        '<span class="episode-num">Ep. ' + (episodeCount < 10 ? '0' + episodeCount : episodeCount) + '</span>' +
+        '<span class="episode-dot"></span>' +
+        '<span class="episode-duration">' + ext + ' &middot; ' + sizeMB + ' MB</span>' +
+      '</div>' +
+      '<div class="episode-title" contenteditable="true">Episode ' + episodeCount + ' &mdash; Click to edit title</div>' +
+      '<div class="episode-desc" contenteditable="true">Click to add a short description for this episode.</div>' +
+      '<audio class="episode-player" controls>' +
+        '<source src="' + url + '">' +
+      '</audio>';
+    list.appendChild(item);
+  });
+
+  document.getElementById('uploadLabel').textContent = 'Upload Another Episode';
+  event.target.value = '';
+}
+
+// Gallery image upload
+function handleGalleryUpload(event) {
+  var files = event.target.files;
+  if (!files.length) return;
+  var grid  = document.getElementById('galleryGrid');
+  var empty = document.getElementById('galleryEmpty');
+  if (empty) empty.style.display = 'none';
+
+  Array.prototype.forEach.call(files, function(file) {
+    if (!file.type.startsWith('image/')) return;
+    var url  = URL.createObjectURL(file);
+    var item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.innerHTML =
+      '<img src="' + url + '" alt="' + file.name + '" loading="lazy">' +
+      '<button class="gallery-item-remove" onclick="this.parentElement.remove(); checkGalleryEmpty();" title="Remove">&times;</button>';
+    grid.appendChild(item);
+  });
+  event.target.value = '';
+}
+
+function checkGalleryEmpty() {
+  var grid  = document.getElementById('galleryGrid');
+  var items = grid.querySelectorAll('.gallery-item');
+  if (items.length === 0) {
+    var empty = document.getElementById('galleryEmpty');
+    if (empty) empty.style.display = 'flex';
+  }
+}
 </script>
 </body>
 </html>
