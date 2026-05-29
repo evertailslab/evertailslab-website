@@ -1,1039 +1,603 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WARDWISE — Clinical Simulation Platform</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WARDWISE — Clinical Simulation Platform for Nursing Education</title>
+  <meta name="description" content="WARDWISE is a high-fidelity clinical simulation platform for nursing schools and healthcare institutions. 52 scenarios, 10 specialties, grounded in 2026 international clinical standards." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg-deep:    #1a0a3e;
-      --bg-mid:     #210d4a;
-      --bg-surface: #2a1260;
-      --bg-card:    #321570;
-      --white:      #ffffff;
-      --text-soft:  rgba(255,255,255,0.85);
-      --text-muted: rgba(255,255,255,0.5);
-      --text-faint: rgba(255,255,255,0.25);
-      --border:     rgba(255,255,255,0.1);
-      --border-hover: rgba(255,200,80,0.4);
-      --accent:     #f5a623;
-      --teal:       #f5a623;
-      --teal-dim:   rgba(245,166,35,0.12);
-      --teal-glow:  rgba(245,166,35,0.08);
-      --gold:       #f5a623;
-      --gold-dim:   rgba(245,166,35,0.1);
-      --purple:     #6c2eb9;
-      --purple-light: #8b44d4;
-      --red:        #ff6b6b;
-      --font-display: 'DM Serif Display', serif;
-      --font-body:    'DM Sans', sans-serif;
-      --radius-sm:  8px;
-      --radius-md:  14px;
-      --radius-lg:  20px;
-      --radius-xl:  28px;
-      --shadow-md:  0 8px 40px rgba(0,0,0,0.4);
-      --shadow-lg:  0 20px 60px rgba(0,0,0,0.5);
+      --deep:    #1a2035;
+      --card:    #212d45;
+      --border:  #2e3f5c;
+      --purple:  #5b21b6;
+      --violet:  #7c3aed;
+      --gold:    #f59e0b;
+      --gold-lt: #fcd34d;
+      --green:   #10b981;
+      --text:    #e8e8f0;
+      --muted:   #8899bb;
+      --white:   #ffffff;
     }
-
     html { scroll-behavior: smooth; }
-
     body {
-      background: var(--bg-deep);
-      color: var(--white);
-      font-family: var(--font-body);
-      font-weight: 300;
+      background: var(--deep);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
       line-height: 1.6;
+      min-height: 100vh;
       overflow-x: hidden;
     }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      padding: 18px 48px;
-      display: flex; align-items: center; justify-content: space-between;
-      background: rgba(7,9,15,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      transition: box-shadow 0.3s;
-    }
-
-    .nav-logo {
-      display: flex; align-items: center; gap: 12px;
-      text-decoration: none;
-    }
-
-    .nav-logo-mark {
-      width: 36px; height: 36px;
-      background: rgba(245,166,35,0.15);
-      border: 1px solid rgba(245,166,35,0.3);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display);
-      font-size: 15px; color: var(--gold);
-      letter-spacing: -0.5px;
-    }
-
-    .nav-logo-text {
-      font-family: var(--font-display);
-      font-size: 20px; color: var(--gold);
-      letter-spacing: -0.3px;
-    }
-
-    .nav-logo-sub {
-      font-size: 10px; font-weight: 300;
-      color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase;
-    }
-
-    .nav-right { display: flex; align-items: center; gap: 24px; }
-
-    .nav-back {
-      font-size: 13px; font-weight: 400;
-      color: var(--text-muted); text-decoration: none;
-      display: flex; align-items: center; gap: 6px;
-      transition: color 0.2s;
-    }
-    .nav-back:hover { color: var(--white); }
-
-    .nav-cta {
-      font-size: 13px; font-weight: 500;
-      color: var(--bg-deep);
-      background: var(--gold); color: #1a0a3e;
-      padding: 10px 24px; border-radius: 100px;
-      text-decoration: none;
-      transition: opacity 0.2s, transform 0.15s;
-    }
-    .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
-
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      display: flex; align-items: center;
-      padding: 120px 48px 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 60% 50% at 70% 50%, rgba(108,46,185,0.4) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(245,166,35,0.08) 0%, transparent 60%),
-        linear-gradient(135deg, #1a0a3e 0%, #2a0d5e 50%, #1a0a3e 100%);
-    }
-
-    .hero-grid-lines {
-      position: absolute; inset: 0; z-index: 0;
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+        linear-gradient(rgba(100,140,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100,140,255,0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
     }
-
-    .hero-inner {
-      position: relative; z-index: 1;
-      max-width: 1100px; margin: 0 auto; width: 100%;
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 80px; align-items: center;
+    .orb { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; }
+    .orb-1 { width: 600px; height: 600px; background: rgba(92,33,182,0.22); top: -150px; left: -150px; }
+    .orb-2 { width: 500px; height: 500px; background: rgba(245,158,11,0.09); bottom: 100px; right: -100px; }
+    .container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(26,32,53,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
     }
-
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px; max-width: 1100px; margin: 0 auto;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 36px; height: 36px; background: var(--violet);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 20px; height: 20px; }
+    .logo-name { font-family: 'DM Serif Display', serif; font-size: 1.25rem; color: var(--white); letter-spacing: 0.04em; }
+    .nav-cta { display: flex; gap: 12px; align-items: center; }
+    .btn-ghost {
+      padding: 8px 18px; border: 1px solid var(--border); border-radius: 8px;
+      color: var(--muted); font-size: 0.875rem; font-family: 'DM Sans', sans-serif;
+      font-weight: 500; text-decoration: none; transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--white); border-color: var(--violet); }
+    .btn-primary {
+      padding: 9px 20px; background: var(--gold); color: #0a0a12;
+      border-radius: 8px; font-size: 0.875rem; font-family: 'DM Sans', sans-serif;
+      font-weight: 600; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-primary:hover { background: var(--gold-lt); transform: translateY(-1px); }
+    .ticker-wrap { background: var(--violet); overflow: hidden; white-space: nowrap; padding: 9px 0; }
+    .ticker-track { display: inline-block; animation: ticker 28s linear infinite; }
+    .ticker-track span {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+      font-weight: 500; color: rgba(255,255,255,0.9);
+      padding: 0 40px; letter-spacing: 0.05em;
+    }
+    .ticker-track span::before { content: '·  '; color: var(--gold); }
+    @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .hero { padding: 100px 0 80px; text-align: center; }
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 8px;
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--gold);
-      background: rgba(245,166,35,0.1);
-      border: 1px solid rgba(245,166,35,0.2);
-      padding: 6px 16px; border-radius: 100px;
-      margin-bottom: 28px;
+      background: rgba(92,33,182,0.2); border: 1px solid rgba(124,58,237,0.35);
+      border-radius: 100px; padding: 6px 16px;
+      font-size: 0.78rem; font-weight: 600; color: var(--gold);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 32px;
     }
-
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(36px, 4.5vw, 60px);
-      line-height: 1.1;
-      letter-spacing: -1px;
-      color: var(--white);
-      margin-bottom: 24px;
+    .hero-eyebrow .dot {
+      width: 6px; height: 6px; background: var(--green);
+      border-radius: 50%; animation: pulse 2s ease-in-out infinite;
     }
-
-    .hero-title em { font-style: italic; color: var(--gold); }
-
-    .hero-desc {
-      font-size: 17px; font-weight: 300;
-      color: var(--text-soft); line-height: 1.8;
-      margin-bottom: 40px;
-      max-width: 480px;
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
     }
-
-    .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: var(--gold); color: #1a0a3e;
-      font-size: 14px; font-weight: 500;
-      padding: 14px 32px; border-radius: 100px;
-      text-decoration: none;
-      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-      letter-spacing: 0.3px;
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      line-height: 1.1; color: var(--white);
+      margin-bottom: 24px; letter-spacing: -0.01em;
     }
-    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,166,35,0.35); }
-
-    .btn-secondary {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border-hover);
-      color: var(--white);
-      font-size: 14px; font-weight: 400;
-      padding: 14px 28px; border-radius: 100px;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-secondary:hover { background: rgba(255,255,255,0.1); transform: translateY(-1px); }
-
-    /* Hero stats */
-    .hero-stats {
-      display: flex; gap: 32px; margin-top: 48px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border);
-    }
-
-    .stat-item { display: flex; flex-direction: column; gap: 4px; }
-    .stat-num {
-      font-family: var(--font-display);
-      font-size: 32px; color: var(--white);
-      letter-spacing: -1px;
-    }
-    .stat-label { font-size: 12px; font-weight: 300; color: var(--text-muted); letter-spacing: 0.5px; }
-
-    /* Hero visual */
-    .hero-visual {
-      position: relative;
-    }
-
-    .hero-screen {
-      background: var(--bg-surface);
-      border: 1px solid rgba(245,166,35,0.2);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
-      position: relative;
-    }
-
-    .screen-bar {
-      background: var(--bg-mid);
-      padding: 12px 20px;
-      display: flex; align-items: center; gap: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .screen-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .screen-dot.r { background: #ff5f57; }
-    .screen-dot.y { background: #ffbd2e; }
-    .screen-dot.g { background: #28ca41; }
-
-    .screen-url {
-      flex: 1; text-align: center;
-      font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px;
-    }
-
-    .screen-content { padding: 24px; }
-
-    /* Mini dashboard mockup */
-    .dash-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 20px;
-    }
-
-    .dash-title {
-      font-family: var(--font-display); font-size: 16px; color: var(--white);
-    }
-
-    .dash-badge {
-      font-size: 10px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
-      background: rgba(245,166,35,0.1); color: var(--gold);
-      border: 1px solid rgba(245,166,35,0.2);
-      padding: 3px 10px; border-radius: 100px;
-    }
-
-    .dash-metrics {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .metric-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 14px;
-    }
-
-    .metric-val {
-      font-family: var(--font-display); font-size: 22px; color: var(--white);
-      margin-bottom: 4px;
-    }
-
-    .metric-val.teal { color: var(--gold); }
-    .metric-val.gold { color: var(--gold); }
-
-    .metric-lbl { font-size: 10px; font-weight: 300; color: var(--text-muted); }
-
-    .scenario-list { display: flex; flex-direction: column; gap: 8px; }
-
-    .scenario-row {
-      display: flex; align-items: center; gap: 12px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 10px 14px;
-    }
-
-    .scenario-icon {
-      width: 28px; height: 28px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; flex-shrink: 0;
-    }
-
-    .scenario-icon.cardiac { background: rgba(255,107,107,0.15); }
-    .scenario-icon.resp    { background: rgba(126,206,196,0.15); }
-    .scenario-icon.peds    { background: rgba(232,201,122,0.15); }
-
-    .scenario-info { flex: 1; min-width: 0; }
-    .scenario-name { font-size: 11px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
-    .scenario-meta { font-size: 10px; color: var(--text-muted); }
-
-    .scenario-score {
-      font-family: var(--font-display); font-size: 14px;
-      color: var(--gold);
-    }
-
-    /* Floating badge */
-    .hero-badge {
-      position: absolute; bottom: -16px; left: -20px;
-      background: var(--bg-card);
-      border: 1px solid rgba(245,166,35,0.25);
-      border-radius: var(--radius-lg);
-      padding: 14px 20px;
-      display: flex; align-items: center; gap: 12px;
-      box-shadow: var(--shadow-md);
-    }
-
-    .badge-icon {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: var(--teal-dim);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .badge-text-top { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 2px; }
-    .badge-text-bot { font-size: 11px; color: var(--text-muted); }
-
-    /* ── VIDEO SECTION ── */
-    .video-section {
-      padding: 96px 48px;
-      background: var(--bg-mid);
-    }
-
-    .section-header {
-      text-align: center;
-      max-width: 560px;
-      margin: 0 auto 56px;
-    }
-
-    .section-eyebrow {
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 2px; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 16px;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(28px, 3.5vw, 44px);
-      line-height: 1.15; letter-spacing: -0.5px;
-      color: var(--white); margin-bottom: 16px;
-    }
-
-    .section-title em { font-style: italic; color: var(--gold); }
-
-    .section-body {
-      font-size: 16px; font-weight: 300;
-      color: var(--text-muted); line-height: 1.75;
-    }
-
-    .video-wrap {
-      max-width: 900px; margin: 0 auto;
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      border: 1px solid rgba(245,166,35,0.2);
-      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-    }
-
-    .video-wrap video {
-      width: 100%; display: block;
-      background: var(--bg-deep);
-    }
-
-    /* ── FEATURES ── */
-    .features-section {
-      padding: 96px 48px;
-      background: var(--bg-deep);
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      max-width: 1100px; margin: 0 auto;
-    }
-
-    .feature-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      padding: 36px 32px;
-      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-    }
-
-    .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--border-hover); }
-
-    .feature-card.featured {
-      background: linear-gradient(135deg, rgba(245,166,35,0.08), rgba(108,46,185,0.05));
-      border-color: rgba(245,166,35,0.25);
-      grid-column: span 1;
-    }
-
-    .feature-icon {
-      width: 48px; height: 48px; border-radius: 14px;
-      background: rgba(245,166,35,0.1);
-      border: 1px solid rgba(245,166,35,0.2);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 24px;
-    }
-
-    .feature-icon svg { width: 22px; height: 22px; color: var(--gold); }
-
-    .feature-title {
-      font-family: var(--font-display);
-      font-size: 20px; color: var(--white);
-      letter-spacing: -0.3px; margin-bottom: 12px;
-    }
-
-    .feature-desc {
-      font-size: 14px; font-weight: 300;
-      color: var(--text-muted); line-height: 1.75;
-    }
-
-    .feature-tag {
-      display: inline-block; margin-top: 20px;
-      font-size: 10px; font-weight: 500;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--gold);
-      background: rgba(245,166,35,0.1);
-      border: 1px solid rgba(245,166,35,0.2);
-      padding: 4px 12px; border-radius: 100px;
-    }
-
-    /* ── SPECIALTIES ── */
-    .specialties-section {
-      padding: 96px 48px;
-      background: var(--bg-mid);
-    }
-
-    .specialties-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 16px;
-      max-width: 1100px; margin: 0 auto;
-    }
-
-    .specialty-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 24px 20px;
-      text-align: center;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-
-    .specialty-card:hover { transform: translateY(-3px); border-color: var(--border-hover); }
-
-    .specialty-emoji { font-size: 28px; margin-bottom: 12px; display: block; }
-
-    .specialty-name {
-      font-size: 13px; font-weight: 500;
-      color: var(--white); margin-bottom: 4px;
-    }
-
-    .specialty-count { font-size: 11px; color: var(--text-muted); }
-
-    /* ── ROLES ── */
-    .roles-section {
-      padding: 96px 48px;
-      background: var(--bg-deep);
-    }
-
-    .roles-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 24px; max-width: 1100px; margin: 0 auto;
-    }
-
-    .role-card {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      padding: 36px 32px;
-    }
-
-    .role-pill {
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub { max-width: 640px; margin: 0 auto 40px; font-size: 1.1rem; color: var(--muted); line-height: 1.7; }
+    .hero-sub strong { color: var(--text); font-weight: 500; }
+    .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-hero-primary {
+      padding: 14px 28px; background: var(--gold); color: #0a0a12;
+      border-radius: 10px; font-size: 1rem; font-family: 'DM Sans', sans-serif;
+      font-weight: 700; text-decoration: none;
       display: inline-flex; align-items: center; gap: 8px;
-      font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
-      padding: 6px 16px; border-radius: 100px;
-      margin-bottom: 24px;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(245,158,11,0.25);
     }
-
-    .role-pill.student  { background: rgba(245,166,35,0.1);  color: var(--gold); border: 1px solid rgba(245,166,35,0.2); }
-    .role-pill.educator { background: rgba(232,201,122,0.1);  color: var(--gold); border: 1px solid rgba(232,201,122,0.2); }
-    .role-pill.admin    { background: rgba(200,212,234,0.08); color: var(--accent); border: 1px solid rgba(200,212,234,0.15); }
-
-    .role-title {
-      font-family: var(--font-display);
-      font-size: 22px; color: var(--white);
-      letter-spacing: -0.3px; margin-bottom: 16px;
+    .btn-hero-primary:hover { background: var(--gold-lt); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(245,158,11,0.35); }
+    .btn-hero-secondary {
+      padding: 14px 28px; background: transparent; color: var(--text);
+      border: 1px solid var(--border); border-radius: 10px;
+      font-size: 1rem; font-family: 'DM Sans', sans-serif; font-weight: 500;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
     }
-
-    .role-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-
-    .role-features li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 14px; font-weight: 300; color: var(--text-soft);
-      line-height: 1.5;
-    }
-
-    .role-features li::before {
-      content: '';
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--gold); flex-shrink: 0; margin-top: 7px;
-    }
-
-    /* ── HOW IT WORKS ── */
-    .how-section {
-      padding: 96px 48px;
-      background: var(--bg-mid);
-    }
-
-    .steps-grid {
+    .btn-hero-secondary:hover { border-color: var(--violet); color: var(--white); transform: translateY(-2px); }
+    .stats {
       display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 32px; max-width: 1100px; margin: 0 auto;
-      position: relative;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; margin: 64px 0;
     }
-
-    .steps-grid::before {
-      content: '';
-      position: absolute; top: 32px; left: 10%; right: 10%;
-      height: 1px; background: linear-gradient(90deg, transparent, var(--border), var(--border), transparent);
+    .stat-cell { background: var(--card); padding: 28px 24px; text-align: center; }
+    .stat-num { font-family: 'DM Serif Display', serif; font-size: 2.4rem; color: var(--white); line-height: 1; margin-bottom: 6px; }
+    .stat-num span { color: var(--gold); }
+    .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+    .section { padding: 80px 0; }
+    .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 12px; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: var(--white); line-height: 1.2; margin-bottom: 16px; }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-body { font-size: 1rem; color: var(--muted); max-width: 560px; line-height: 1.7; }
+    .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; }
+    .how-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px 28px; position: relative;
+      overflow: hidden; transition: border-color 0.25s, transform 0.25s;
     }
-
-    .step-item { text-align: center; position: relative; }
-
-    .step-num {
-      width: 64px; height: 64px; border-radius: 50%;
-      background: var(--bg-surface);
-      border: 1px solid rgba(245,166,35,0.25);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 20px;
-      font-family: var(--font-display); font-size: 22px;
-      color: var(--gold);
-      position: relative; z-index: 1;
+    .how-card:hover { border-color: rgba(124,58,237,0.5); transform: translateY(-4px); }
+    .how-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--violet), var(--gold));
+      opacity: 0; transition: opacity 0.25s;
     }
-
-    .step-title {
-      font-size: 15px; font-weight: 500;
-      color: var(--white); margin-bottom: 8px;
+    .how-card:hover::before { opacity: 1; }
+    .step-num { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--violet); letter-spacing: 0.1em; margin-bottom: 16px; font-weight: 500; }
+    .how-icon {
+      width: 44px; height: 44px; background: rgba(92,33,182,0.15);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px; font-size: 1.3rem;
     }
-
-    .step-desc { font-size: 13px; font-weight: 300; color: var(--text-muted); line-height: 1.65; }
-
-    /* ── CTA ── */
-    .cta-section {
-      padding: 96px 48px;
-      background: var(--bg-deep);
-      text-align: center;
+    .how-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--white); margin-bottom: 10px; }
+    .how-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+    .inst-section {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 24px; padding: 64px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
     }
-
-    .cta-inner {
-      max-width: 680px; margin: 0 auto;
-      background: linear-gradient(135deg, rgba(126,206,196,0.06), rgba(200,212,234,0.03));
-      border: 1px solid rgba(245,166,35,0.2);
-      border-radius: var(--radius-xl);
-      padding: 72px 56px;
+    .inst-features { list-style: none; margin-top: 28px; }
+    .inst-features li {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid var(--border);
+      font-size: 0.95rem; color: var(--muted); line-height: 1.5;
     }
-
-    .cta-title {
-      font-family: var(--font-display);
-      font-size: clamp(28px, 3.5vw, 44px);
-      line-height: 1.15; letter-spacing: -0.5px;
-      color: var(--white); margin-bottom: 20px;
+    .inst-features li:last-child { border-bottom: none; }
+    .inst-features li strong { color: var(--text); font-weight: 500; }
+    .check {
+      width: 20px; height: 20px; background: rgba(16,185,129,0.15);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
     }
-
-    .cta-title em { font-style: italic; color: var(--gold); }
-
-    .cta-desc {
-      font-size: 16px; font-weight: 300;
-      color: var(--text-muted); line-height: 1.75;
-      margin-bottom: 40px;
+    .check svg { width: 11px; height: 11px; }
+    .standards-box {
+      background: rgba(92,33,182,0.08); border: 1px solid rgba(124,58,237,0.25);
+      border-radius: 16px; padding: 32px;
     }
-
-    .cta-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--bg-mid);
-      border-top: 1px solid var(--border);
-      padding: 40px 48px;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 16px;
+    .standards-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px; font-weight: 500; }
+    .standards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .std-badge {
+      background: rgba(26,32,53,0.6); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 12px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+      color: var(--text); letter-spacing: 0.02em;
     }
+    .std-badge span { color: var(--muted); }
 
-    .footer-left {
-      font-size: 13px; font-weight: 300; color: var(--text-muted);
+    /* VIDEO SECTION */
+    .video-section {
+      background: var(--card); border: 1px solid rgba(124,58,237,0.25);
+      border-radius: 24px; padding: 52px; text-align: center; margin-bottom: 0;
     }
-
-    .footer-right {
-      display: flex; gap: 32px;
+    .video-wrap {
+      margin-top: 32px; border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     }
+    .video-wrap video { width: 100%; display: block; background: var(--deep); }
 
-    .footer-right a {
-      font-size: 13px; font-weight: 300; color: var(--text-muted);
-      text-decoration: none; transition: color 0.2s;
+    .demo-section {
+      background: var(--card); border: 1px solid var(--green);
+      border-radius: 24px; padding: 52px; text-align: center;
+      position: relative; overflow: hidden;
     }
-    .footer-right a:hover { color: var(--white); }
-
-    /* ── FADE UP ── */
-    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .fade-up.visible { opacity: 1; transform: none; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      nav { padding: 16px 24px; }
-      .hero { padding: 100px 24px 60px; }
-      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-      .hero-visual { display: none; }
-      .video-section, .features-section, .specialties-section,
-      .roles-section, .how-section, .cta-section { padding: 64px 24px; }
-      .features-grid { grid-template-columns: 1fr; }
-      .specialties-grid { grid-template-columns: repeat(2, 1fr); }
-      .roles-grid { grid-template-columns: 1fr; }
-      .steps-grid { grid-template-columns: repeat(2, 1fr); }
-      .steps-grid::before { display: none; }
-      .cta-inner { padding: 48px 28px; }
-      footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+    .demo-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center top, rgba(16,185,129,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .demo-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3);
+      border-radius: 100px; padding: 6px 16px;
+      font-size: 0.78rem; font-weight: 600; color: var(--green);
+      letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 24px;
+    }
+    .demo-section h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--white); margin-bottom: 12px; }
+    .demo-section p { color: var(--muted); font-size: 0.95rem; margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .cred-card {
+      display: inline-block; background: rgba(26,32,53,0.7);
+      border: 1px solid var(--border); border-radius: 14px;
+      padding: 24px 36px; margin-bottom: 32px; text-align: left;
+    }
+    .cred-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; }
+    .cred-row:first-child { border-bottom: 1px solid var(--border); padding-bottom: 14px; margin-bottom: 6px; }
+    .cred-label { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); width: 70px; flex-shrink: 0; }
+    .cred-value { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--green); font-weight: 500; }
+    .copy-btn {
+      background: none; border: 1px solid var(--border); border-radius: 6px;
+      padding: 3px 8px; font-size: 0.7rem; color: var(--muted);
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .copy-btn:hover { color: var(--white); border-color: var(--violet); }
+    .btn-demo-login {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 15px 36px; background: var(--violet); color: var(--white);
+      border-radius: 10px; font-size: 1rem; font-family: 'DM Sans', sans-serif;
+      font-weight: 600; text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(124,58,237,0.3);
+    }
+    .btn-demo-login:hover { background: #6d28d9; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,58,237,0.4); }
+    .demo-note { margin-top: 16px; font-size: 0.8rem; color: var(--muted); }
+    .pilot-section {
+      background: linear-gradient(135deg, rgba(92,33,182,0.15) 0%, rgba(245,158,11,0.08) 100%);
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 24px; padding: 64px; text-align: center;
+    }
+    .pilot-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--white); margin-bottom: 16px; }
+    .pilot-section > p { color: var(--muted); font-size: 1rem; max-width: 520px; margin: 0 auto 36px; line-height: 1.7; }
+    .pilot-form { display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin: 0 auto; }
+    .pilot-form input, .pilot-form select {
+      width: 100%; padding: 13px 18px;
+      background: rgba(26,32,53,0.7); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text); font-size: 0.95rem;
+      font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s;
+    }
+    .pilot-form input::placeholder { color: var(--muted); }
+    .pilot-form input:focus, .pilot-form select:focus { border-color: var(--violet); }
+    .pilot-form select option { background: var(--card); }
+    .pilot-form .btn-submit {
+      padding: 14px; background: var(--gold); color: #0a0a12;
+      border: none; border-radius: 10px; font-size: 1rem;
+      font-family: 'DM Sans', sans-serif; font-weight: 700;
+      cursor: pointer; transition: background 0.2s, transform 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .pilot-form .btn-submit:hover { background: var(--gold-lt); transform: translateY(-1px); }
+    .pilot-privacy { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
+    .success-msg {
+      display: none; background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.3); border-radius: 10px;
+      padding: 20px; color: var(--green); font-weight: 500;
+    }
+    footer { border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; position: relative; z-index: 1; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-brand { font-family: 'DM Serif Display', serif; font-size: 1rem; color: var(--white); }
+    .footer-brand span { color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 400; margin-left: 8px; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.85rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.7s ease both; }
+    .fade-up-1 { animation-delay: 0.1s; }
+    .fade-up-2 { animation-delay: 0.2s; }
+    .fade-up-3 { animation-delay: 0.3s; }
+    .fade-up-4 { animation-delay: 0.4s; }
+    .fade-up-5 { animation-delay: 0.5s; }
+    @media (max-width: 768px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .how-grid { grid-template-columns: 1fr; }
+      .inst-section { grid-template-columns: 1fr; padding: 36px 24px; gap: 36px; }
+      .standards-grid { grid-template-columns: 1fr; }
+      .demo-section { padding: 36px 24px; }
+      .pilot-section { padding: 40px 24px; }
+      .hero { padding: 60px 0 48px; }
+      .section { padding: 52px 0; }
+      .nav-cta .btn-ghost { display: none; }
+      .video-section { padding: 32px 24px; }
+      .cred-card { padding: 20px 16px; }
     }
   </style>
 </head>
 <body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
 
-<!-- NAV -->
-<nav id="topNav">
-  <a href="index.html" class="nav-logo">
-    <div class="nav-logo-mark">W</div>
-    <div>
-      <div class="nav-logo-text">WARDWISE</div>
-      <div class="nav-logo-sub">Clinical Simulation</div>
-    </div>
-  </a>
-  <div class="nav-right">
-    <a href="index.html" class="nav-back">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-      EverTails Lab
-    </a>
-    <a href="index.html#contact" class="nav-cta">Request a Demo</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid-lines"></div>
-  <div class="hero-inner">
-    <div class="hero-left">
-      <div class="hero-eyebrow">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>
-        Clinical Simulation Platform
-      </div>
-      <h1 class="hero-title">Train smarter.<br><em>Practice safer.</em><br>Graduate ready.</h1>
-      <p class="hero-desc">WARDWISE places nursing students inside high-fidelity clinical scenarios — following real patients across shifts, making real decisions, and receiving AI-powered feedback grounded in 2026 international standards.</p>
-      <div class="hero-actions">
-        <a href="index.html#contact" class="btn-primary">
-          Request a Demo
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <span class="logo-name">WARDWISE</span>
+      </a>
+      <div class="nav-cta">
+        <a href="https://evertailslab.com" class="btn-ghost">EverTails Lab</a>
+        <a href="#demo" class="btn-ghost">Try Demo</a>
+        <a href="#pilot" class="btn-ghost">Request Pilot</a>
+        <a href="https://wardwise.biz/dashboard" class="btn-primary">
+          Sign In
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
-        <button onclick="document.getElementById('video').scrollIntoView({behavior:'smooth'})" class="btn-secondary" style="cursor:pointer; border:none;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
-          Watch Demo
-        </button>
-      </div>
-      <div class="hero-stats">
-        <div class="stat-item">
-          <span class="stat-num">52</span>
-          <span class="stat-label">Clinical Scenarios</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num">10</span>
-          <span class="stat-label">Specialty Domains</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num">3</span>
-          <span class="stat-label">User Roles</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-num">AI</span>
-          <span class="stat-label">Powered Feedback</span>
-        </div>
       </div>
     </div>
+  </nav>
 
-    <!-- Dashboard mockup -->
-    <div class="hero-visual fade-up">
-      <div class="hero-screen">
-        <div class="screen-bar">
-          <span class="screen-dot r"></span>
-          <span class="screen-dot y"></span>
-          <span class="screen-dot g"></span>
-          <span class="screen-url">wardwise.biz — Student Dashboard</span>
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span>52 Clinical Scenarios</span><span>10 Medical Specialties</span><span>3-Shift Patient Progression</span><span>AI-Powered Clinical Feedback</span><span>2026 International Standards</span><span>AHA · ANA · KDIGO · SSC · ADA · ILAE · IDSA · GINA</span><span>Cohort Management</span><span>HRIS Export Ready</span><span>DOH Compliance Data</span><span>52 Clinical Scenarios</span><span>10 Medical Specialties</span><span>3-Shift Patient Progression</span><span>AI-Powered Clinical Feedback</span><span>2026 International Standards</span><span>AHA · ANA · KDIGO · SSC · ADA · ILAE · IDSA · GINA</span><span>Cohort Management</span><span>HRIS Export Ready</span><span>DOH Compliance Data</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-eyebrow fade-up fade-up-1">
+        <span class="dot"></span>
+        Now accepting pilot institutions &middot; Free 30-Day Access
+      </div>
+      <h1 class="fade-up fade-up-2">Train Nurses<br/><em>Like They're at the Bedside</em></h1>
+      <p class="hero-sub fade-up fade-up-3">WARDWISE is a high-fidelity clinical simulation platform for nursing schools and healthcare institutions. Students follow real patients across three shifts, make clinical decisions across five categories, and receive <strong>AI-powered feedback grounded in 2026 international standards</strong>.</p>
+      <div class="hero-actions fade-up fade-up-4">
+        <a href="#demo" class="btn-hero-primary">
+          Try the Platform Free
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="#pilot" class="btn-hero-secondary">
+          Request Institution Pilot
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- STATS -->
+    <div class="stats fade-up">
+      <div class="stat-cell"><div class="stat-num">52<span></span></div><div class="stat-label">Clinical Scenarios</div></div>
+      <div class="stat-cell"><div class="stat-num">10<span></span></div><div class="stat-label">Medical Specialties</div></div>
+      <div class="stat-cell"><div class="stat-num">5<span></span></div><div class="stat-label">Decision Categories</div></div>
+      <div class="stat-cell"><div class="stat-num">3<span></span></div><div class="stat-label">Shifts Per Scenario</div></div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <section class="section">
+      <div class="section-label">How It Works</div>
+      <div class="section-title">Clinical judgment built<br/><em>decision by decision</em></div>
+      <p class="section-body">Every scenario mirrors the real ward environment — dynamic patient data, clinical deterioration, and consequences that follow from your decisions.</p>
+      <div class="how-grid">
+        <div class="how-card fade-up fade-up-1">
+          <div class="step-num">STEP 01</div>
+          <div class="how-icon">🏥</div>
+          <h3>Receive Your Patient</h3>
+          <p>Students are assigned a real clinical case with vitals, labs, SBAR handoff, orders, and active events — exactly as on the ward.</p>
         </div>
-        <div class="screen-content">
-          <div class="dash-header">
-            <div class="dash-title">My Progress</div>
-            <div class="dash-badge">Active Session</div>
-          </div>
-          <div class="dash-metrics">
-            <div class="metric-card">
-              <div class="metric-val gold">87%</div>
-              <div class="metric-lbl">Avg. Score</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-val">14</div>
-              <div class="metric-lbl">Completed</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-val gold">3</div>
-              <div class="metric-lbl">In Progress</div>
-            </div>
-          </div>
-          <div class="scenario-list">
-            <div class="scenario-row">
-              <div class="scenario-icon cardiac">❤️</div>
-              <div class="scenario-info">
-                <div class="scenario-name">Acute MI — Shift 2 of 3</div>
-                <div class="scenario-meta">Cardiac · Intermediate</div>
-              </div>
-              <div class="scenario-score">+3.2</div>
-            </div>
-            <div class="scenario-row">
-              <div class="scenario-icon resp">🫁</div>
-              <div class="scenario-info">
-                <div class="scenario-name">Respiratory Failure — Shift 1</div>
-                <div class="scenario-meta">Respiratory · Advanced</div>
-              </div>
-              <div class="scenario-score">+2.8</div>
-            </div>
-            <div class="scenario-row">
-              <div class="scenario-icon peds">👶</div>
-              <div class="scenario-info">
-                <div class="scenario-name">Neonatal Sepsis — Shift 3</div>
-                <div class="scenario-meta">Pediatric · Beginner</div>
-              </div>
-              <div class="scenario-score">+4.0</div>
-            </div>
-          </div>
+        <div class="how-card fade-up fade-up-2">
+          <div class="step-num">STEP 02</div>
+          <div class="how-icon">⚖️</div>
+          <h3>Make Clinical Decisions</h3>
+          <p>Across five categories — Prioritization, Medication, Delegation, Consultation, Documentation — students choose the best action under real clinical pressure.</p>
+        </div>
+        <div class="how-card fade-up fade-up-3">
+          <div class="step-num">STEP 03</div>
+          <div class="how-icon">🤖</div>
+          <h3>Receive AI Feedback</h3>
+          <p>Every decision generates immediate, evidence-based feedback: clinical impact, optimal action, rationale, and the specific 2026 guideline cited.</p>
         </div>
       </div>
-      <div class="hero-badge">
-        <div class="badge-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7ECEC4" stroke-width="2" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    </section>
+
+    <!-- FOR INSTITUTIONS -->
+    <section class="section" id="institutions">
+      <div class="inst-section">
+        <div>
+          <div class="section-label">For Institutions</div>
+          <div class="section-title">Built for educators,<br/><em>not just students</em></div>
+          <p class="section-body">WARDWISE gives nursing school deans, clinical educators, and training directors the tools to manage, measure, and improve clinical competency at scale.</p>
+          <ul class="inst-features">
+            <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div><strong>Cohort management</strong> — Create cohorts, assign scenarios, set due dates, and monitor every student's progress in real time</div></li>
+            <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div><strong>Institutional alerts</strong> — Automatic flags when more than 30% of students show weakness in a clinical domain</div></li>
+            <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div><strong>Export-ready data</strong> — Competency reports formatted for Oracle Fusion, SAP SuccessFactors, Excel, or DOH compliance documentation</div></li>
+            <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div><strong>Zero installation</strong> — Fully browser-based. Works on any device, any network, any location</div></li>
+            <li><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div><strong>NCLEX-aligned</strong> — Scenarios mapped to the Clinical Judgment Measurement Model (CJMM) for direct NCLEX-RN preparation support</div></li>
+          </ul>
         </div>
         <div>
-          <div class="badge-text-top">AI Feedback Ready</div>
-          <div class="badge-text-bot">Evidence-based · Real-time</div>
+          <div class="standards-box">
+            <div class="standards-title">Clinical Guidelines Referenced</div>
+            <div class="standards-grid">
+              <div class="std-badge">AHA/ACC <span>&middot; Cardiac</span></div>
+              <div class="std-badge">ANA <span>&middot; Delegation</span></div>
+              <div class="std-badge">KDIGO <span>&middot; Renal</span></div>
+              <div class="std-badge">SSC <span>&middot; Sepsis</span></div>
+              <div class="std-badge">ADA <span>&middot; Diabetes</span></div>
+              <div class="std-badge">ILAE/AES <span>&middot; Epilepsy</span></div>
+              <div class="std-badge">AHA/ASA <span>&middot; Stroke</span></div>
+              <div class="std-badge">GOLD 2024 <span>&middot; COPD</span></div>
+              <div class="std-badge">NAEPP/GINA <span>&middot; Asthma</span></div>
+              <div class="std-badge">IDSA <span>&middot; Infectious</span></div>
+            </div>
+            <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+              <div class="section-label" style="margin-bottom:10px;">Specialties Covered</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                <span style="background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);border-radius:6px;padding:4px 10px;font-size:0.75rem;color:var(--text);">Cardiac</span>
+                <span style="background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);border-radius:6px;padding:4px 10px;font-size:0.75rem;color:var(--text);">Respiratory</span>
+                <span style="background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);border-radius:6px;padding:4px 10px;font-size:0.75rem;color:var(--text);">Sepsis</span>
+                <span style="background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);border-radius:6px;padding:4px 10px;font-size:0.75rem;color:var(--text);">Metabolic</span>
+                <span style="background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);border-radius:6px;padding:4px 10px;font-size:0.75rem;color:var(--text);">Neurological</span>
+                <span style="background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);border-radius:6px;padding:4px 10px;font-size:0.75rem;color:var(--text);">Renal / Dialysis</span>
+                <span style="background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);border-radius:6px;padding:4px 10px;font-size:0.75rem;color:var(--text);">Pediatric</span>
+                <span style="background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);border-radius:6px;padding:4px 10px;font-size:0.75rem;color:var(--text);">Obstetric</span>
+                <span style="background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);border-radius:6px;padding:4px 10px;font-size:0.75rem;color:var(--text);">Long-Term Care</span>
+                <span style="background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);border-radius:6px;padding:4px 10px;font-size:0.75rem;color:var(--text);">Occupational Health</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- VIDEO -->
-<section class="video-section" id="video">
-  <div class="section-header fade-up">
-    <div class="section-eyebrow">See It In Action</div>
-    <h2 class="section-title">A platform built for <em>real clinical thinking.</em></h2>
-    <p class="section-body">Watch how WARDWISE puts students inside shift-based patient scenarios with immediate consequences and AI-powered guidance.</p>
-  </div>
-  <div class="video-wrap fade-up">
-    <video controls>
-      <source src="https://archive.org/download/wardwisedecisions-2/WARDWISEDECISIONS2.mp4" type="video/mp4">
-      Your browser does not support the video element.
-    </video>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section class="features-section" id="features">
-  <div class="section-header fade-up">
-    <div class="section-eyebrow">Platform Features</div>
-    <h2 class="section-title">Everything a nursing school <em>needs.</em></h2>
-    <p class="section-body">Built from the ground up for nursing education — not adapted from generic e-learning tools.</p>
-  </div>
-  <div class="features-grid">
-
-    <div class="feature-card featured fade-up">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    <!-- VIDEO -->
+    <section class="section">
+      <div class="video-section">
+        <div class="section-label">See It In Action</div>
+        <div class="section-title" style="margin-bottom:8px;">Watch WARDWISE <em>in practice</em></div>
+        <p style="color:var(--muted);font-size:0.95rem;margin-bottom:0;">See how students navigate real clinical decisions across shifts with AI-powered guidance.</p>
+        <div class="video-wrap">
+          <video controls>
+            <source src="https://archive.org/download/wardwisedecisions-2/WARDWISEDECISIONS2.mp4" type="video/mp4">
+            Your browser does not support the video element.
+          </video>
+        </div>
       </div>
-      <div class="feature-title">Shift-Based Patient Scenarios</div>
-      <p class="feature-desc">Students follow real patients across multiple shifts — morning, afternoon, and night. Every decision in shift 1 changes what happens in shift 2. This is how real nursing works.</p>
-      <span class="feature-tag">52 Scenarios</span>
-    </div>
+    </section>
 
-    <div class="feature-card fade-up">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+    <!-- DEMO -->
+    <section class="section" id="demo">
+      <div class="demo-section">
+        <div class="demo-badge">
+          <span class="dot" style="width:8px;height:8px;background:var(--green);border-radius:50%;display:inline-block;animation:pulse 2s ease-in-out infinite;"></span>
+          Platform Live &mdash; No Account Required
+        </div>
+        <h2>Explore WARDWISE Now</h2>
+        <p>Use the demo credentials below to access the full platform instantly. No sign-up, no commitment &mdash; just the clinical experience.</p>
+        <div class="cred-card">
+          <div class="cred-row">
+            <span class="cred-label">Email</span>
+            <span class="cred-value" id="demo-email">demo@wardwise.com</span>
+            <button class="copy-btn" onclick="copyText('demo@wardwise.com', this)">Copy</button>
+          </div>
+          <div class="cred-row">
+            <span class="cred-label">Password</span>
+            <span class="cred-value" id="demo-pass">demo123</span>
+            <button class="copy-btn" onclick="copyText('demo123', this)">Copy</button>
+          </div>
+        </div>
+        <div>
+          <a href="https://wardwise.biz/dashboard" class="btn-demo-login">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            Enter Platform
+          </a>
+        </div>
+        <p class="demo-note">Demo access shows all 52 scenarios across 10 specialties. For institutional access with cohort management, request a pilot below.</p>
       </div>
-      <div class="feature-title">Real-Time AI Feedback</div>
-      <p class="feature-desc">Every clinical decision receives immediate, evidence-based feedback powered by AI — citing international standards including AHA, ANA, ACOG, and KDIGO guidelines.</p>
-      <span class="feature-tag">LLM Powered</span>
-    </div>
+    </section>
 
-    <div class="feature-card fade-up">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <!-- PILOT REQUEST -->
+    <section class="section" id="pilot">
+      <div class="pilot-section">
+        <div class="hero-eyebrow fade-up" style="display:inline-flex;margin-bottom:20px;">
+          <span class="dot"></span>
+          Free &middot; No Commitment &middot; 30 Days
+        </div>
+        <h2>Request an Institutional Pilot</h2>
+        <p>We are offering free 30-day access to a select number of nursing schools and healthcare institutions. Our only ask is a 30-minute feedback conversation at the end of the pilot.</p>
+        <form class="pilot-form" id="pilotForm">
+          <input type="hidden" name="access_key" value="c8b69ecb-977d-43ef-ab4c-bd4540ed6311">
+          <input type="hidden" name="subject" value="WARDWISE Institutional Pilot Request">
+          <input type="hidden" name="from_name" value="WARDWISE Website">
+          <input type="hidden" name="redirect" value="false">
+          <input type="text" name="name" placeholder="Your full name" required />
+          <input type="text" name="institution" placeholder="Institution name" required />
+          <select name="role" required>
+            <option value="" disabled selected>Your role</option>
+            <option>Dean / Program Director</option>
+            <option>Clinical Educator / Instructor</option>
+            <option>Training Manager</option>
+            <option>Nursing Director</option>
+            <option>Other</option>
+          </select>
+          <input type="email" name="email" placeholder="Your email address" required />
+          <input type="tel" name="phone" placeholder="Phone / WhatsApp (optional)" />
+          <button type="submit" class="btn-submit">
+            Apply for Free Pilot
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+          <p class="pilot-privacy">Your information is never shared. Jennifer will respond personally within 24 hours.</p>
+        </form>
+        <div class="success-msg" id="successMsg">
+          Thank you &mdash; Jennifer will reach out within 24 hours to confirm your pilot details.
+        </div>
       </div>
-      <div class="feature-title">Cohort Management</div>
-      <p class="feature-desc">Instructors organize students into cohorts, assign specific scenarios, track group progress, and identify students who need additional support — all from one dashboard.</p>
-      <span class="feature-tag">Multi-Role</span>
-    </div>
+    </section>
+  </div>
 
-    <div class="feature-card fade-up">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">WARDWISE <span>by EverTails Lab &middot; Built by Jennifer Lualhati, RN</span></div>
+      <div class="footer-links">
+        <span style="font-size:0.85rem;color:var(--muted);">jennifer@evertailslab.com</span>
+        <a href="https://evertailslab.com">EverTails Lab</a>
+        <a href="https://wardwise.biz/dashboard">Sign In</a>
       </div>
-      <div class="feature-title">Analytics Dashboard</div>
-      <p class="feature-desc">Comprehensive learning analytics for students, instructors, and administrators — showing performance trends, decision patterns, scenario completion rates, and clinical reasoning scores.</p>
-      <span class="feature-tag">Data Driven</span>
     </div>
+  </footer>
 
-    <div class="feature-card fade-up">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      </div>
-      <div class="feature-title">5 Decision Categories</div>
-      <p class="feature-desc">Students practice the full clinical decision spectrum — Prioritization, Medication, Delegation, Consultation, and Documentation — across 5 difficulty levels from Beginner to Advanced.</p>
-      <span class="feature-tag">Evidence-Based</span>
-    </div>
+  <script>
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(function() {
+        var orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.style.color = '#10b981';
+        btn.style.borderColor = '#10b981';
+        setTimeout(function() {
+          btn.textContent = orig;
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }, 2000);
+      });
+    }
 
-    <div class="feature-card fade-up">
-      <div class="feature-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-      </div>
-      <div class="feature-title">Secure Cloud Platform</div>
-      <p class="feature-desc">Built on enterprise-grade infrastructure with OAuth 2.0 authentication, JWT session management, role-based access control, and HTTPS encryption across all data.</p>
-      <span class="feature-tag">Enterprise Ready</span>
-    </div>
-
-  </div>
-</section>
-
-<!-- SPECIALTIES -->
-<section class="specialties-section">
-  <div class="section-header fade-up">
-    <div class="section-eyebrow">Clinical Specialties</div>
-    <h2 class="section-title">10 domains. <em>52 scenarios.</em></h2>
-    <p class="section-body">Every major nursing specialty is covered — from cardiac emergencies to obstetric care.</p>
-  </div>
-  <div class="specialties-grid fade-up">
-    <div class="specialty-card">
-      <span class="specialty-emoji">❤️</span>
-      <div class="specialty-name">Cardiac</div>
-      <div class="specialty-count">6 scenarios</div>
-    </div>
-    <div class="specialty-card">
-      <span class="specialty-emoji">🫁</span>
-      <div class="specialty-name">Respiratory</div>
-      <div class="specialty-count">5 scenarios</div>
-    </div>
-    <div class="specialty-card">
-      <span class="specialty-emoji">👶</span>
-      <div class="specialty-name">Pediatric</div>
-      <div class="specialty-count">6 scenarios</div>
-    </div>
-    <div class="specialty-card">
-      <span class="specialty-emoji">🤰</span>
-      <div class="specialty-name">Obstetric</div>
-      <div class="specialty-count">5 scenarios</div>
-    </div>
-    <div class="specialty-card">
-      <span class="specialty-emoji">🧠</span>
-      <div class="specialty-name">Neuro</div>
-      <div class="specialty-count">5 scenarios</div>
-    </div>
-    <div class="specialty-card">
-      <span class="specialty-emoji">🩺</span>
-      <div class="specialty-name">Medical-Surgical</div>
-      <div class="specialty-count">6 scenarios</div>
-    </div>
-    <div class="specialty-card">
-      <span class="specialty-emoji">🚨</span>
-      <div class="specialty-name">Critical Care</div>
-      <div class="specialty-count">5 scenarios</div>
-    </div>
-    <div class="specialty-card">
-      <span class="specialty-emoji">💊</span>
-      <div class="specialty-name">Pharmacology</div>
-      <div class="specialty-count">4 scenarios</div>
-    </div>
-    <div class="specialty-card">
-      <span class="specialty-emoji">🦴</span>
-      <div class="specialty-name">Orthopedic</div>
-      <div class="specialty-count">5 scenarios</div>
-    </div>
-    <div class="specialty-card">
-      <span class="specialty-emoji">🧬</span>
-      <div class="specialty-name">Oncology</div>
-      <div class="specialty-count">5 scenarios</div>
-    </div>
-  </div>
-</section>
-
-<!-- ROLES -->
-<section class="roles-section">
-  <div class="section-header fade-up">
-    <div class="section-eyebrow">Built For Everyone</div>
-    <h2 class="section-title">Three roles. <em>One platform.</em></h2>
-    <p class="section-body">WARDWISE serves students, educators, and administrators — each with a tailored experience and the right level of access.</p>
-  </div>
-  <div class="roles-grid">
-
-    <div class="role-card fade-up">
-      <div class="role-pill student">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        Student
-      </div>
-      <div class="role-title">Learn by doing,<br>not by reading.</div>
-      <ul class="role-features">
-        <li>Access 52 clinical scenarios across 10 specialties</li>
-        <li>Follow patients across full multi-shift journeys</li>
-        <li>Receive instant AI feedback on every decision</li>
-        <li>Track personal progress and performance trends</li>
-        <li>Browse scenario library by specialty and difficulty</li>
-      </ul>
-    </div>
-
-    <div class="role-card fade-up">
-      <div class="role-pill educator">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Educator
-      </div>
-      <div class="role-title">Guide your cohort<br>with real data.</div>
-      <ul class="role-features">
-        <li>Create and manage student cohorts</li>
-        <li>Assign specific scenarios to groups or individuals</li>
-        <li>Monitor cohort progress and performance metrics</li>
-        <li>Identify students who need extra support</li>
-        <li>Generate reports for academic assessment</li>
-      </ul>
-    </div>
-
-    <div class="role-card fade-up">
-      <div class="role-pill admin">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        Administrator
-      </div>
-      <div class="role-title">Full control of<br>your institution.</div>
-      <ul class="role-features">
-        <li>Manage all users, roles, and permissions</li>
-        <li>Create and configure instructor accounts</li>
-        <li>Access platform-wide analytics and reports</li>
-        <li>Configure organizational settings</li>
-        <li>Monitor system health and usage metrics</li>
-      </ul>
-    </div>
-
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how-section">
-  <div class="section-header fade-up">
-    <div class="section-eyebrow">How It Works</div>
-    <h2 class="section-title">From signup to <em>simulation</em> in minutes.</h2>
-  </div>
-  <div class="steps-grid fade-up">
-    <div class="step-item">
-      <div class="step-num">1</div>
-      <div class="step-title">Institution Onboards</div>
-      <p class="step-desc">Your school gets a dedicated WARDWISE environment with your branding and settings configured.</p>
-    </div>
-    <div class="step-item">
-      <div class="step-num">2</div>
-      <div class="step-title">Educators Set Up Cohorts</div>
-      <p class="step-desc">Instructors create student groups, assign scenarios by specialty and difficulty, and set learning objectives.</p>
-    </div>
-    <div class="step-item">
-      <div class="step-num">3</div>
-      <div class="step-title">Students Begin Simulations</div>
-      <p class="step-desc">Students log in, enter their assigned scenarios, and start making real clinical decisions with patient consequences.</p>
-    </div>
-    <div class="step-item">
-      <div class="step-num">4</div>
-      <div class="step-title">Track & Improve</div>
-      <p class="step-desc">AI feedback, analytics dashboards, and performance reports help everyone — students, educators, and admins — continuously improve.</p>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section">
-  <div class="cta-inner fade-up">
-    <div class="section-eyebrow" style="justify-content:center; display:flex; margin-bottom:20px;">Ready to Transform Nursing Education?</div>
-    <h2 class="cta-title">See WARDWISE<br><em>in your school.</em></h2>
-    <p class="cta-desc">Request a personalized demo and see how WARDWISE can bridge the gap between your classroom and the clinical ward — for your students, your educators, and your institution.</p>
-    <div class="cta-actions">
-      <a href="index.html#contact" class="btn-primary">
-        Request a Demo
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      <a href="mailto:jennifer@evertailslab.com" class="btn-secondary">
-        Email Us Directly
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-left">© 2026 EverTails Lab. WARDWISE is a product of EverTails Lab.</div>
-  <div class="footer-right">
-    <a href="index.html">EverTails Lab</a>
-    <a href="index.html#contact">Contact</a>
-    <a href="mailto:jennifer@evertailslab.com">jennifer@evertailslab.com</a>
-  </div>
-</footer>
-
-<script>
-// Fade up on scroll
-var observer = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-up').forEach(function(el) { observer.observe(el); });
-
-// Nav shadow
-window.addEventListener('scroll', function() {
-  document.getElementById('topNav').style.boxShadow =
-    window.scrollY > 20 ? '0 4px 32px rgba(0,0,0,0.4)' : 'none';
-});
-</script>
+    document.getElementById('pilotForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = this.querySelector('.btn-submit');
+      var successMsg = document.getElementById('successMsg');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      var data = new FormData(this);
+      fetch('https://api.web3forms.com/submit', { method: 'POST', body: data })
+        .then(function(res) { return res.json(); })
+        .then(function(json) {
+          if (json.success) {
+            document.getElementById('pilotForm').style.display = 'none';
+            successMsg.style.display = 'block';
+          } else {
+            btn.textContent = 'Apply for Free Pilot';
+            btn.disabled = false;
+            alert('Something went wrong. Please email jennifer@evertailslab.com directly.');
+          }
+        })
+        .catch(function() {
+          btn.textContent = 'Apply for Free Pilot';
+          btn.disabled = false;
+          alert('Something went wrong. Please email jennifer@evertailslab.com directly.');
+        });
+    });
+  </script>
 </body>
 </html>
