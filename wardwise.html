@@ -11,16 +11,16 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --deep:    #1a2035;
-      --card:    #212d45;
-      --border:  #2e3f5c;
+      --deep:    #0a0a12;
+      --card:    #12121f;
+      --border:  #1e1e32;
       --purple:  #5b21b6;
       --violet:  #7c3aed;
       --gold:    #f59e0b;
       --gold-lt: #fcd34d;
       --green:   #10b981;
       --text:    #e8e8f0;
-      --muted:   #8899bb;
+      --muted:   #8888aa;
       --white:   #ffffff;
     }
     html { scroll-behavior: smooth; }
@@ -38,19 +38,19 @@
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(100,140,255,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(100,140,255,0.06) 1px, transparent 1px);
+        linear-gradient(rgba(92,33,182,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(92,33,182,0.07) 1px, transparent 1px);
       background-size: 40px 40px;
       pointer-events: none;
       z-index: 0;
     }
-    .orb { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; }
-    .orb-1 { width: 600px; height: 600px; background: rgba(92,33,182,0.22); top: -150px; left: -150px; }
-    .orb-2 { width: 500px; height: 500px; background: rgba(245,158,11,0.09); bottom: 100px; right: -100px; }
+    .orb { position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0; }
+    .orb-1 { width: 500px; height: 500px; background: rgba(92,33,182,0.18); top: -100px; left: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: rgba(245,158,11,0.08); bottom: 100px; right: -80px; }
     .container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(26,32,53,0.88);
+      background: rgba(10,10,18,0.85);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
@@ -195,7 +195,7 @@
     .standards-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px; font-weight: 500; }
     .standards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .std-badge {
-      background: rgba(26,32,53,0.6); border: 1px solid var(--border);
+      background: rgba(10,10,18,0.6); border: 1px solid var(--border);
       border-radius: 8px; padding: 8px 12px;
       font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
       color: var(--text); letter-spacing: 0.02em;
@@ -234,7 +234,7 @@
     .demo-section h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--white); margin-bottom: 12px; }
     .demo-section p { color: var(--muted); font-size: 0.95rem; margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto; }
     .cred-card {
-      display: inline-block; background: rgba(26,32,53,0.7);
+      display: inline-block; background: rgba(10,10,18,0.7);
       border: 1px solid var(--border); border-radius: 14px;
       padding: 24px 36px; margin-bottom: 32px; text-align: left;
     }
@@ -269,7 +269,7 @@
     .pilot-form { display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin: 0 auto; }
     .pilot-form input, .pilot-form select {
       width: 100%; padding: 13px 18px;
-      background: rgba(26,32,53,0.7); border: 1px solid var(--border);
+      background: rgba(10,10,18,0.7); border: 1px solid var(--border);
       border-radius: 10px; color: var(--text); font-size: 0.95rem;
       font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s;
     }
@@ -315,7 +315,6 @@
       .section { padding: 52px 0; }
       .nav-cta .btn-ghost { display: none; }
       .video-section { padding: 32px 24px; }
-      .cred-card { padding: 20px 16px; }
     }
   </style>
 </head>
@@ -335,8 +334,6 @@
         <span class="logo-name">WARDWISE</span>
       </a>
       <div class="nav-cta">
-        <a href="https://evertailslab.com" class="btn-ghost">EverTails Lab</a>
-        <a href="#demo" class="btn-ghost">Try Demo</a>
         <a href="#pilot" class="btn-ghost">Request Pilot</a>
         <a href="https://wardwise.biz/dashboard" class="btn-primary">
           Sign In
@@ -467,43 +464,34 @@
         <div class="section-label">See It In Action</div>
         <div class="section-title" style="margin-bottom:8px;">Watch WARDWISE <em>in practice</em></div>
         <p style="color:var(--muted);font-size:0.95rem;margin-bottom:0;">See how students navigate real clinical decisions across shifts with AI-powered guidance.</p>
-        <div class="video-wrap">
-          <video controls>
-            <source src="https://archive.org/download/wardwisedecisions-2/WARDWISEDECISIONS2.mp4" type="video/mp4">
-            Your browser does not support the video element.
-          </video>
+        <div class="video-wrap" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;">
+          <iframe
+            src="https://archive.org/embed/wardwisedecisions-2"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
+            allowfullscreen
+            webkitallowfullscreen
+            mozallowfullscreen>
+          </iframe>
         </div>
       </div>
     </section>
 
-    <!-- DEMO -->
+    <!-- TRY WARDWISE -->
     <section class="section" id="demo">
       <div class="demo-section">
         <div class="demo-badge">
           <span class="dot" style="width:8px;height:8px;background:var(--green);border-radius:50%;display:inline-block;animation:pulse 2s ease-in-out infinite;"></span>
-          Platform Live &mdash; No Account Required
+          Platform Live &mdash; Try It Now
         </div>
-        <h2>Explore WARDWISE Now</h2>
-        <p>Use the demo credentials below to access the full platform instantly. No sign-up, no commitment &mdash; just the clinical experience.</p>
-        <div class="cred-card">
-          <div class="cred-row">
-            <span class="cred-label">Email</span>
-            <span class="cred-value" id="demo-email">demo@wardwise.com</span>
-            <button class="copy-btn" onclick="copyText('demo@wardwise.com', this)">Copy</button>
-          </div>
-          <div class="cred-row">
-            <span class="cred-label">Password</span>
-            <span class="cred-value" id="demo-pass">demo123</span>
-            <button class="copy-btn" onclick="copyText('demo123', this)">Copy</button>
-          </div>
-        </div>
+        <h2>Experience WARDWISE</h2>
+        <p>Visit the WARDWISE platform and use the demo login to explore all 52 clinical scenarios across 10 specialties &mdash; no account or commitment required.</p>
         <div>
-          <a href="https://wardwise.biz/dashboard" class="btn-demo-login">
+          <a href="https://wardwise.biz" target="_blank" class="btn-demo-login">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Enter Platform
+            Visit WARDWISE
           </a>
         </div>
-        <p class="demo-note">Demo access shows all 52 scenarios across 10 specialties. For institutional access with cohort management, request a pilot below.</p>
+        <p class="demo-note">Click "Demo Login" on the WARDWISE homepage to explore the platform instantly. For institutional access with cohort management, request a pilot below.</p>
       </div>
     </section>
 
@@ -551,8 +539,8 @@
     <div class="footer-inner">
       <div class="footer-brand">WARDWISE <span>by EverTails Lab &middot; Built by Jennifer Lualhati, RN</span></div>
       <div class="footer-links">
-        <span style="font-size:0.85rem;color:var(--muted);">jennifer@evertailslab.com</span>
-        <a href="https://evertailslab.com">EverTails Lab</a>
+        <a href="mailto:jennifer@evertailslab.com">jennifer@evertailslab.com</a>
+        <a href="index.html">EverTails Lab</a>
         <a href="https://wardwise.biz/dashboard">Sign In</a>
       </div>
     </div>
