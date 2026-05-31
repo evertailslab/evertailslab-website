@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health IT &amp; Informatics 2026 — State of the Field</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* ── Palette from the three panels ── */
+  --bg:       #F2F2ED;   /* vague / lightest beige */
+  --surface:  #EDEAE4;   /* slightly deeper warm white */
+  --surface2: #DCD6CE;   /* specific / taupe */
+  --border:   rgba(109,146,182,0.18);
+  --border2:  rgba(109,146,182,0.32);
+  --text:     #2E2B27;   /* deep warm brown-black */
+  --text2:    #6B6458;   /* mid taupe */
+  --text3:    #9C9388;   /* light taupe */
+
+  /* ── Accent palette derived from the dusty blue ── */
+  --blue:     #6D92B6;              /* most-specific panel — primary accent */
+  --blue-dim: rgba(109,146,182,0.12);
+  --blue-med: rgba(109,146,182,0.28);
+
+  /* ── Supporting accents — muted, palette-harmonious ── */
+  --gold:     #A0845C;              /* warm amber-brown */
+  --gold-dim: rgba(160,132,92,0.14);
+  --coral:    #B07468;              /* dusty terra-cotta */
+  --coral-dim:rgba(176,116,104,0.12);
+  --teal:     #5E8E85;              /* muted sage-teal */
+  --teal-dim: rgba(94,142,133,0.12);
+  --violet:   #7E7BAA;              /* dusty lavender */
+  --violet-dim:rgba(126,123,170,0.12);
+  --green:    #5A7A5A;              /* forest green */
+  --green-dim:rgba(90,122,90,0.1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* SUBTLE LINEN TEXTURE */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(109,146,182,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(109,146,182,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* SOFT WASH ORBS */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.28;
+  pointer-events: none;
+  z-index: 0;
+}
+.orb-1 { width: 700px; height: 700px; background: #6D92B6; top: -260px; right: -180px; }
+.orb-2 { width: 500px; height: 500px; background: #DCD6CE; bottom: 5%; left: -120px; }
+
+/* LAYOUT */
+.wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 32px 80px;
+}
+
+/* HEADER */
+header {
+  padding: 60px 0 48px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 56px;
+}
+
+.header-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--blue);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding: 6px 12px;
+  background: var(--blue-dim);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+}
+
+.header-eyebrow::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--blue);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+h1 em {
+  font-style: italic;
+  color: var(--blue);
+}
+
+.header-sub {
+  font-size: 16px;
+  color: var(--text2);
+  line-height: 1.6;
+  max-width: 560px;
+  margin-bottom: 32px;
+}
+
+.meta-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.meta-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.meta-chip span {
+  color: var(--text2);
+}
+
+/* NAV TABS */
+.nav-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 48px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 4px;
+  width: fit-content;
+  flex-wrap: wrap;
+}
+
+.nav-tab {
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
+}
+
+.nav-tab:hover { color: var(--text); background: var(--surface2); }
+
+.nav-tab.active {
+  color: #fff;
+  background: var(--blue);
+}
+
+/* OVERVIEW STATS */
+.overview-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.stat-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent, var(--teal));
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.stat-value {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-delta {
+  font-size: 11px;
+  color: var(--teal);
+}
+
+/* RANK CARDS */
+.tech-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tech-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s;
+  cursor: pointer;
+}
+
+.tech-card:hover {
+  border-color: var(--card-accent, var(--teal));
+  transform: translateY(-2px);
+}
+
+.tech-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 28px 28px 24px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.rank-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 48px;
+  line-height: 1;
+  opacity: 0.12;
+  position: absolute;
+  top: 16px; right: 24px;
+  color: var(--card-accent, var(--teal));
+  pointer-events: none;
+  user-select: none;
+}
+
+.rank-badge-sm {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.tech-header-text { flex: 1; }
+
+.tech-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.tech-tagline {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+.card-expand-btn {
+  width: 32px; height: 32px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  color: var(--text2);
+  flex-shrink: 0;
+  transition: all 0.2s;
+  margin-top: 2px;
+}
+
+.tech-card:hover .card-expand-btn {
+  background: var(--card-accent, var(--teal));
+  color: var(--bg);
+  border-color: transparent;
+}
+
+.expanded .card-expand-btn { transform: rotate(45deg); }
+
+/* CARD BODY */
+.tech-card-body {
+  display: none;
+  padding: 0 28px 28px;
+  animation: fadeIn 0.3s ease;
+}
+
+.tech-card-body.open { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* METRICS ROW */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.metric-item {
+  text-align: center;
+}
+
+.metric-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--card-accent, var(--teal));
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.metric-lbl {
+  font-size: 11px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* SECTION LABEL */
+.sec-lbl {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 14px;
+  margin-top: 24px;
+}
+
+/* FEATURES GRID */
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.feat-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  transition: border-color 0.2s;
+}
+
+.feat-item:hover { border-color: var(--card-accent, var(--teal)); }
+
+.feat-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.feat-desc {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+/* EVIDENCE BARS */
+.evidence-item { margin-bottom: 14px; }
+
+.ev-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.ev-label { font-size: 12px; color: var(--text2); }
+.ev-value { font-size: 13px; font-weight: 600; color: var(--card-accent, var(--teal)); font-family: 'JetBrains Mono', monospace; }
+
+.bar-track {
+  height: 4px;
+  background: var(--surface2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--card-accent, var(--teal));
+  opacity: 0.7;
+  width: 0%;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+/* PLAYERS */
+.players-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.player-tag {
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-family: 'JetBrains Mono', monospace;
+  transition: all 0.15s;
+}
+
+.player-tag:hover {
+  border-color: var(--card-accent, var(--blue));
+  color: var(--card-accent, var(--blue));
+  background: var(--blue-dim);
+}
+
+/* IMPACT LIST */
+.impact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.impact-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.55;
+}
+
+.impact-icon {
+  width: 18px; height: 18px;
+  background: var(--blue-dim);
+  border: 1px solid var(--border2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  color: var(--blue);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* COMPARISON VIEW */
+#view-compare { display: none; }
+#view-compare.active-view { display: block; }
+#view-overview, #view-technologies {
+  display: none;
+}
+#view-overview.active-view, #view-technologies.active-view {
+  display: block;
+}
+
+/* COMPARISON TABLE */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.compare-table th {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+}
+
+.compare-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  vertical-align: middle;
+}
+
+.compare-table tr:hover td {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.compare-table .tech-name-cell {
+  font-weight: 500;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.dot-score {
+  display: flex;
+  gap: 3px;
+}
+
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+
+.dot.filled { background: var(--blue); }
+.dot.empty { background: var(--border2); }
+
+/* TRENDS VIEW */
+#view-trends { display: none; }
+#view-trends.active-view { display: block; }
+
+.trend-item {
+  display: flex;
+  gap: 20px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+
+.trend-item:last-child { border-bottom: none; }
+
+.trend-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  color: var(--border2);
+  line-height: 1;
+  min-width: 44px;
+  text-align: right;
+}
+
+.trend-body { flex: 1; }
+
+.trend-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.trend-desc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.65;
+}
+
+.trend-tag {
+  display: inline-block;
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  margin-top: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding-top: 32px;
+  margin-top: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-label {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .wrapper { padding: 0 20px 60px; }
+  h1 { font-size: 32px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .metrics-row { grid-template-columns: 1fr; gap: 8px; }
+  .overview-stats { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-eyebrow">Live Research Brief · May 2026</div>
+    <h1>Health IT &amp; <em>Informatics</em><br>State of the Field</h1>
+    <p class="header-sub">Top emerging technologies ranked by market adoption, evidence base, and organizational impact — synthesized from HIMSS, ONC, JAMA, industry analysts, and real-world clinical outcomes.</p>
+    <div class="meta-strip">
+      <div class="meta-chip">📅 <span>Published May 31, 2026</span></div>
+      <div class="meta-chip">🔬 <span>Evidence-based · 5 technology profiles</span></div>
+      <div class="meta-chip">🌐 <span>Global &amp; US market scope</span></div>
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <div class="nav-tabs" role="tablist">
+    <button class="nav-tab active" onclick="showView('overview')" role="tab">Overview</button>
+    <button class="nav-tab" onclick="showView('technologies')" role="tab">Technology Profiles</button>
+    <button class="nav-tab" onclick="showView('compare')" role="tab">Side-by-Side</button>
+    <button class="nav-tab" onclick="showView('trends')" role="tab">Key Trends</button>
+  </div>
+
+  <!-- ====== OVERVIEW VIEW ====== -->
+  <div id="view-overview" class="active-view">
+
+    <div class="overview-stats">
+      <div class="stat-card" style="--accent: var(--gold)">
+        <div class="stat-label">ACI Market 2035</div>
+        <div class="stat-value">$56.6B</div>
+        <div class="stat-delta">↑ CAGR 22.85%</div>
+      </div>
+      <div class="stat-card" style="--accent: var(--blue)">
+        <div class="stat-label">AI-CDSS Market 2033</div>
+        <div class="stat-value">$15.3B</div>
+        <div class="stat-delta">↑ CAGR 20.89%</div>
+      </div>
+      <div class="stat-card" style="--accent: var(--coral)">
+        <div class="stat-label">EHR Vendors w/ FHIR</div>
+        <div class="stat-value">92%</div>
+        <div class="stat-delta">↑ Near-universal mandate</div>
+      </div>
+      <div class="stat-card" style="--accent: var(--teal)">
+        <div class="stat-label">Pop. Health Mkt 2032</div>
+        <div class="stat-value">$16.5B</div>
+        <div class="stat-delta">↑ from $3.6B in 2025</div>
+      </div>
+      <div class="stat-card" style="--accent: var(--violet)">
+        <div class="stat-label">US HIT Market Value</div>
+        <div class="stat-value">~$6T</div>
+        <div class="stat-delta">↑ National healthcare product</div>
+      </div>
+    </div>
+
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin-bottom: 32px;">
+      <div class="sec-lbl" style="margin-top:0">Rankings at a glance</div>
+      <div style="display:flex;flex-direction:column;gap:0">
+        <div onclick="showView('technologies'); setTimeout(()=>toggleCard('card-1'),100)" style="display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity 0.15s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+          <div style="width:28px;height:28px;border-radius:7px;background:rgba(160,132,92,0.18);border:1px solid rgba(160,132,92,0.28);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold);font-weight:600;flex-shrink:0">1</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px">Ambient Clinical Intelligence &amp; AI Medical Scribes</div>
+            <div style="font-size:12px;color:var(--text3)">Fastest-growing · $7.24B (2025) · 22.85% CAGR</div>
+          </div>
+          <div style="font-size:11px;color:var(--gold);font-family:'JetBrains Mono',monospace">→</div>
+        </div>
+        <div onclick="showView('technologies'); setTimeout(()=>toggleCard('card-2'),100)" style="display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity 0.15s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+          <div style="width:28px;height:28px;border-radius:7px;background:rgba(109,146,182,0.15);border:1px solid rgba(109,146,182,0.28);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--blue);font-weight:600;flex-shrink:0">2</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px">AI-Enabled Clinical Decision Support Systems</div>
+            <div style="font-size:12px;color:var(--text3)">Strongest evidence base · $2.8B (2025) · 20.89% CAGR</div>
+          </div>
+          <div style="font-size:11px;color:var(--blue);font-family:'JetBrains Mono',monospace">→</div>
+        </div>
+        <div onclick="showView('technologies'); setTimeout(()=>toggleCard('card-3'),100)" style="display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity 0.15s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+          <div style="width:28px;height:28px;border-radius:7px;background:rgba(176,116,104,0.14);border:1px solid rgba(176,116,104,0.24);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--coral);font-weight:600;flex-shrink:0">3</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px">FHIR-Based Interoperability &amp; Health Data Exchange</div>
+            <div style="font-size:12px;color:var(--text3)">Infrastructure backbone · 92% EHR vendor support · $34.96B by 2032</div>
+          </div>
+          <div style="font-size:11px;color:var(--coral);font-family:'JetBrains Mono',monospace">→</div>
+        </div>
+        <div onclick="showView('technologies'); setTimeout(()=>toggleCard('card-4'),100)" style="display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity 0.15s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+          <div style="width:28px;height:28px;border-radius:7px;background:rgba(94,142,133,0.12);border:1px solid rgba(94,142,133,0.22);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--teal);font-weight:600;flex-shrink:0">4</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px">Predictive Analytics &amp; Population Health Management</div>
+            <div style="font-size:12px;color:var(--text3)">Value-based care enabler · $3.60B (2025) → $16.46B (2032)</div>
+          </div>
+          <div style="font-size:11px;color:var(--teal);font-family:'JetBrains Mono',monospace">→</div>
+        </div>
+        <div onclick="showView('technologies'); setTimeout(()=>toggleCard('card-5'),100)" style="display:flex;align-items:center;gap:16px;padding:16px 0;cursor:pointer;transition:opacity 0.15s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+          <div style="width:28px;height:28px;border-radius:7px;background:rgba(126,123,170,0.12);border:1px solid rgba(126,123,170,0.22);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--violet);font-weight:600;flex-shrink:0">5</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px">EHR Optimization &amp; Strategic Health IT Partnerships</div>
+            <div style="font-size:12px;color:var(--text3)">Governance shift · ROI over novelty · ~$6T US market</div>
+          </div>
+          <div style="font-size:11px;color:var(--violet);font-family:'JetBrains Mono',monospace">→</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--blue-dim);border:1px solid var(--border2);border-radius:12px;padding:20px 24px">
+      <div style="font-size:13px;color:var(--text2);line-height:1.7">
+        <strong style="color:var(--blue);font-weight:500">Key Insight 2026:</strong> Organizations building a clean, interoperable FHIR data foundation first are extracting disproportionate ROI from every AI layer placed on top. The gap between digital leaders and laggards is widening rapidly.
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== TECHNOLOGIES VIEW ====== -->
+  <div id="view-technologies">
+    <div class="tech-grid">
+
+      <!-- CARD 1: ACI -->
+      <div class="tech-card" id="card-1" style="--card-accent: var(--gold)">
+        <div class="tech-card-header" onclick="toggleCard('card-1')">
+          <div class="rank-badge-sm" style="background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:var(--gold)">1</div>
+          <div class="tech-header-text">
+            <div class="tech-title">Ambient Clinical Intelligence &amp; AI Medical Scribes</div>
+            <div class="tech-tagline">Voice AI for automated EHR documentation — fastest-growing Health IT segment of 2026</div>
+          </div>
+          <div class="card-expand-btn">+</div>
+          <div class="rank-num">01</div>
+        </div>
+        <div class="tech-card-body" id="body-card-1">
+          <div class="metrics-row">
+            <div class="metric-item"><div class="metric-val">$7.24B</div><div class="metric-lbl">2025 Market</div></div>
+            <div class="metric-item"><div class="metric-val">$56.6B</div><div class="metric-lbl">2035 Projected</div></div>
+            <div class="metric-item"><div class="metric-val">22.85%</div><div class="metric-lbl">CAGR 2026–35</div></div>
+          </div>
+          <div class="sec-lbl">Key Features</div>
+          <div class="features-grid">
+            <div class="feat-item"><div class="feat-name">Real-time ambient listening</div><div class="feat-desc">Passively records clinician-patient encounters using NLP &amp; ASR — no manual triggers</div></div>
+            <div class="feat-item"><div class="feat-name">Automated SOAP note generation</div><div class="feat-desc">Structures clinical notes and inserts them directly into the EHR post-encounter</div></div>
+            <div class="feat-item"><div class="feat-name">LLM-powered context awareness</div><div class="feat-desc">Differentiates clinically relevant speech from ambient noise with specialty-tuned models</div></div>
+            <div class="feat-item"><div class="feat-name">EHR-native integration</div><div class="feat-desc">Certified for Epic, Oracle Cerner, and all major platforms via open APIs</div></div>
+            <div class="feat-item"><div class="feat-name">Workflow intelligence</div><div class="feat-desc">Triggers orders, referrals, and ICD coding suggestions automatically post-encounter</div></div>
+            <div class="feat-item"><div class="feat-name">Multilingual &amp; specialty tuning</div><div class="feat-desc">Fine-tuned per specialty (cardiology, ER, nephrology); expanding global language support</div></div>
+          </div>
+          <div class="sec-lbl">Evidence-Based Outcomes</div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">Documentation time reduction</span><span class="ev-value">up to 75%</span></div><div class="bar-track"><div class="bar-fill" data-width="75"></div></div></div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">Daily clinician time recaptured</span><span class="ev-value">~35 min/day</span></div><div class="bar-track"><div class="bar-fill" data-width="65"></div></div></div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">ROI per $1 invested in AI documentation</span><span class="ev-value">$3+ return</span></div><div class="bar-track"><div class="bar-fill" data-width="80"></div></div></div>
+          <div class="sec-lbl">Key Players</div>
+          <div class="players-wrap">
+            <span class="player-tag">Microsoft Dragon Copilot</span><span class="player-tag">Abridge AI</span><span class="player-tag">Nuance DAX</span><span class="player-tag">Suki AI</span><span class="player-tag">Augmedix</span><span class="player-tag">DeepScribe</span><span class="player-tag">AWS HealthLake</span>
+          </div>
+          <div class="sec-lbl">Organizational Impact</div>
+          <div class="impact-list">
+            <div class="impact-row"><div class="impact-icon">✓</div>Reduces physician burnout and eliminates after-hours "pajama time" charting</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>Improves note completeness and coding accuracy, directly boosting revenue cycle performance</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>Increases patient-facing time per encounter; raises patient satisfaction and HCAHPS scores</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>~42% of healthcare facilities projected to use AI for clinical documentation by end-2026</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2: AI-CDSS -->
+      <div class="tech-card" id="card-2" style="--card-accent: var(--blue)">
+        <div class="tech-card-header" onclick="toggleCard('card-2')">
+          <div class="rank-badge-sm" style="background:rgba(96,165,250,0.15);border:1px solid rgba(96,165,250,0.25);color:var(--blue)">2</div>
+          <div class="tech-header-text">
+            <div class="tech-title">AI-Enabled Clinical Decision Support Systems</div>
+            <div class="tech-tagline">Evidence-based AI recommendations at the point of care — highest clinical evidence density in Health IT</div>
+          </div>
+          <div class="card-expand-btn">+</div>
+          <div class="rank-num">02</div>
+        </div>
+        <div class="tech-card-body" id="body-card-2">
+          <div class="metrics-row">
+            <div class="metric-item"><div class="metric-val">$2.8B</div><div class="metric-lbl">2025 Market</div></div>
+            <div class="metric-item"><div class="metric-val">$15.3B</div><div class="metric-lbl">2033 Projected</div></div>
+            <div class="metric-item"><div class="metric-val">20.89%</div><div class="metric-lbl">CAGR 2026–33</div></div>
+          </div>
+          <div class="sec-lbl">Key Features</div>
+          <div class="features-grid">
+            <div class="feat-item"><div class="feat-name">Diagnostic accuracy engine</div><div class="feat-desc">ML models trained on multimodal clinical data providing differential diagnosis support</div></div>
+            <div class="feat-item"><div class="feat-name">Medication safety alerts</div><div class="feat-desc">Drug-allergy, drug-drug, and renal dosing alerts — top segment at 26.2% market share</div></div>
+            <div class="feat-item"><div class="feat-name">Sepsis &amp; deterioration detection</div><div class="feat-desc">Real-time early warning scores embedded directly into nursing and ICU workflows</div></div>
+            <div class="feat-item"><div class="feat-name">Precision medicine pathways</div><div class="feat-desc">Genomic + phenotypic risk models generating tailored, individualized treatment plans</div></div>
+            <div class="feat-item"><div class="feat-name">Predictive risk stratification</div><div class="feat-desc">Forecasts 30-day readmissions, ICU deterioration, and chronic disease progression</div></div>
+            <div class="feat-item"><div class="feat-name">EHR-embedded workflow</div><div class="feat-desc">Delivers actionable insights in-context — no separate tool required at point of care</div></div>
+          </div>
+          <div class="sec-lbl">Evidence-Based Outcomes</div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">Evidence base (systematic reviews — Ouanes et al. 2024)</span><span class="ev-value">26 RCTs reviewed</span></div><div class="bar-track"><div class="bar-fill" data-width="90"></div></div></div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">Sepsis-related mortality reduction (real-world, 1-year)</span><span class="ev-value">&gt;20%</span></div><div class="bar-track"><div class="bar-fill" data-width="70"></div></div></div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">Diagnostic accuracy improvement vs. unaided clinician</span><span class="ev-value">Significant (meta-analysis)</span></div><div class="bar-track"><div class="bar-fill" data-width="82"></div></div></div>
+          <div class="sec-lbl">Key Players</div>
+          <div class="players-wrap">
+            <span class="player-tag">Epic (embedded AI)</span><span class="player-tag">Oracle Health / Cerner</span><span class="player-tag">Wolters Kluwer</span><span class="player-tag">IBM Watson Health</span><span class="player-tag">HEALWELL AI</span><span class="player-tag">ClinicalKey AI</span><span class="player-tag">VIRad.AI</span>
+          </div>
+          <div class="sec-lbl">Organizational Impact</div>
+          <div class="impact-list">
+            <div class="impact-row"><div class="impact-icon">✓</div>Markedly reduces medical errors — proven across 26 controlled clinical studies</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>Drug allergy alerts prevent adverse drug reactions, reducing malpractice exposure</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>Reduces ICU LOS and supports value-based care quality metrics and CMS reporting</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>North America holds 43.6% of global market share — US infrastructure leads globally</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3: FHIR -->
+      <div class="tech-card" id="card-3" style="--card-accent: var(--coral)">
+        <div class="tech-card-header" onclick="toggleCard('card-3')">
+          <div class="rank-badge-sm" style="background:rgba(251,113,133,0.15);border:1px solid rgba(251,113,133,0.25);color:var(--coral)">3</div>
+          <div class="tech-header-text">
+            <div class="tech-title">FHIR-Based Interoperability &amp; Health Data Exchange</div>
+            <div class="tech-tagline">The foundational infrastructure layer of modern Health IT — near-universal mandate globally</div>
+          </div>
+          <div class="card-expand-btn">+</div>
+          <div class="rank-num">03</div>
+        </div>
+        <div class="tech-card-body" id="body-card-3">
+          <div class="metrics-row">
+            <div class="metric-item"><div class="metric-val">92%</div><div class="metric-lbl">EHR Vendor Adoption</div></div>
+            <div class="metric-item"><div class="metric-val">$34.96B</div><div class="metric-lbl">Market by 2032</div></div>
+            <div class="metric-item"><div class="metric-val">73%</div><div class="metric-lbl">Countries w/ Mandate</div></div>
+          </div>
+          <div class="sec-lbl">Key Features</div>
+          <div class="features-grid">
+            <div class="feat-item"><div class="feat-name">FHIR R4 API-first exchange</div><div class="feat-desc">Standard RESTful APIs enabling real-time, bidirectional cross-system data sharing</div></div>
+            <div class="feat-item"><div class="feat-name">TEFCA &amp; QHIN framework</div><div class="feat-desc">Nationwide US health data highway — QHINs now piloting live FHIR exchange (2025–26)</div></div>
+            <div class="feat-item"><div class="feat-name">Patient access APIs</div><div class="feat-desc">81% of hospitals have enabled patient-facing data access portals (ONC data)</div></div>
+            <div class="feat-item"><div class="feat-name">Event-driven architecture</div><div class="feat-desc">Real-time notifications replacing legacy batch and manual point-to-point transfers</div></div>
+            <div class="feat-item"><div class="feat-name">Information blocking enforcement</div><div class="feat-desc">ONC penalties up to $1M/violation — HHS escalated active enforcement September 2025</div></div>
+            <div class="feat-item"><div class="feat-name">FHIR R6 (late 2026)</div><div class="feat-desc">Normative status for most clinical resources — reduces future migration complexity</div></div>
+          </div>
+          <div class="sec-lbl">Evidence-Based Outcomes</div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">Hospitals engaging all 4 exchange domains</span><span class="ev-value">43% (was 28% in 2018)</span></div><div class="bar-track"><div class="bar-fill" data-width="43"></div></div></div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">Hospitals integrating external data into EHR</span><span class="ev-value">74%</span></div><div class="bar-track"><div class="bar-fill" data-width="74"></div></div></div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">Physicians querying external records electronically</span><span class="ev-value">61%</span></div><div class="bar-track"><div class="bar-fill" data-width="61"></div></div></div>
+          <div class="sec-lbl">Key Players</div>
+          <div class="players-wrap">
+            <span class="player-tag">Epic (MyChart API)</span><span class="player-tag">Oracle Cerner</span><span class="player-tag">InterSystems</span><span class="player-tag">Philips Healthcare</span><span class="player-tag">athenahealth</span><span class="player-tag">Veradigm</span><span class="player-tag">CommonWell / Carequality</span>
+          </div>
+          <div class="sec-lbl">Organizational Impact</div>
+          <div class="impact-list">
+            <div class="impact-row"><div class="impact-icon">✓</div>Eliminates data silos — creates unified longitudinal patient record across care settings</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>Accelerates AI readiness — all AI platforms require clean, structured FHIR-formatted data</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>Reduces duplicative testing and improves care coordination across provider networks</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>Directly positions organizations for CMS value-based reimbursement compliance and upside</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 4: Population Health -->
+      <div class="tech-card" id="card-4" style="--card-accent: var(--teal)">
+        <div class="tech-card-header" onclick="toggleCard('card-4')">
+          <div class="rank-badge-sm" style="background:rgba(45,212,191,0.1);border:1px solid rgba(45,212,191,0.2);color:var(--teal)">4</div>
+          <div class="tech-header-text">
+            <div class="tech-title">Predictive Analytics &amp; Population Health Management</div>
+            <div class="tech-tagline">AI-driven population risk stratification enabling proactive, value-based care delivery at scale</div>
+          </div>
+          <div class="card-expand-btn">+</div>
+          <div class="rank-num">04</div>
+        </div>
+        <div class="tech-card-body" id="body-card-4">
+          <div class="metrics-row">
+            <div class="metric-item"><div class="metric-val">$3.6B</div><div class="metric-lbl">2025 Market</div></div>
+            <div class="metric-item"><div class="metric-val">$16.5B</div><div class="metric-lbl">2032 Projected</div></div>
+            <div class="metric-item"><div class="metric-val">$116B</div><div class="metric-lbl">US Clinical Informatics</div></div>
+          </div>
+          <div class="sec-lbl">Key Features</div>
+          <div class="features-grid">
+            <div class="feat-item"><div class="feat-name">Population risk stratification</div><div class="feat-desc">Segments high/medium/low-risk patients using ML across EHR, claims, and social data</div></div>
+            <div class="feat-item"><div class="feat-name">Care gap identification</div><div class="feat-desc">Surfaces preventive care gaps and chronic disease management deficiencies across panels</div></div>
+            <div class="feat-item"><div class="feat-name">Readmission prediction models</div><div class="feat-desc">30-day readmission risk scores with actionable care coordinator alerts</div></div>
+            <div class="feat-item"><div class="feat-name">IoMT &amp; wearable integration</div><div class="feat-desc">Streams continuous remote monitoring data for proactive, early intervention</div></div>
+            <div class="feat-item"><div class="feat-name">Value-based care reporting</div><div class="feat-desc">Quality measure tracking and payer contract performance dashboards for ACOs</div></div>
+            <div class="feat-item"><div class="feat-name">Real-world evidence integration</div><div class="feat-desc">Feeds RWE back to clinical trials and FDA software as medical device (SaMD) frameworks</div></div>
+          </div>
+          <div class="sec-lbl">Evidence-Based Outcomes</div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">Hospital readmission reduction (NY primary care study)</span><span class="ev-value">30.4%</span></div><div class="bar-track"><div class="bar-fill" data-width="60"></div></div></div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">Corewell Health: cost savings via analytics</span><span class="ev-value">$5M / 200 readmissions prevented</span></div><div class="bar-track"><div class="bar-fill" data-width="70"></div></div></div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">HCC risk adjustment coding accuracy (AI-automated)</span><span class="ev-value">90%+</span></div><div class="bar-track"><div class="bar-fill" data-width="88"></div></div></div>
+          <div class="sec-lbl">Key Players</div>
+          <div class="players-wrap">
+            <span class="player-tag">Epic (Cosmos)</span><span class="player-tag">Optum / UnitedHealth</span><span class="player-tag">MedeAnalytics</span><span class="player-tag">Conifer Health</span><span class="player-tag">Illustra Health</span><span class="player-tag">SAS Institute</span><span class="player-tag">Microsoft Azure Health</span>
+          </div>
+          <div class="sec-lbl">Organizational Impact</div>
+          <div class="impact-list">
+            <div class="impact-row"><div class="impact-icon">✓</div>Enables proactive vs. reactive care models — measurably reduces avoidable hospitalizations</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>Supports ACO &amp; MSSP performance — directly tied to CMS reimbursement upside sharing</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>Automates HCC risk adjustment coding, improving RAF scores and revenue accuracy</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>Advances health equity by identifying underserved, high-risk populations at population scale</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 5: EHR Optimization -->
+      <div class="tech-card" id="card-5" style="--card-accent: var(--violet)">
+        <div class="tech-card-header" onclick="toggleCard('card-5')">
+          <div class="rank-badge-sm" style="background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.22);color:var(--violet)">5</div>
+          <div class="tech-header-text">
+            <div class="tech-title">EHR Optimization &amp; Strategic Health IT Partnerships</div>
+            <div class="tech-tagline">The dominant 2026 governance shift — from fragmented point solutions to integrated strategic platforms</div>
+          </div>
+          <div class="card-expand-btn">+</div>
+          <div class="rank-num">05</div>
+        </div>
+        <div class="tech-card-body" id="body-card-5">
+          <div class="metrics-row">
+            <div class="metric-item"><div class="metric-val">~$6T</div><div class="metric-lbl">US HIT Market</div></div>
+            <div class="metric-item"><div class="metric-val">$528.5B</div><div class="metric-lbl">Global HIS by 2030</div></div>
+            <div class="metric-item"><div class="metric-val">ROI-first</div><div class="metric-lbl">Dominant Strategy</div></div>
+          </div>
+          <div class="sec-lbl">Key Features</div>
+          <div class="features-grid">
+            <div class="feat-item"><div class="feat-name">EHR workflow optimization</div><div class="feat-desc">Maximizing underutilized capabilities of Epic, Cerner, MEDITECH before new investments</div></div>
+            <div class="feat-item"><div class="feat-name">Cybersecurity &amp; ransomware defense</div><div class="feat-desc">Zero-trust, immutable backups, workforce training — now baseline, not optional</div></div>
+            <div class="feat-item"><div class="feat-name">Cloud modernization</div><div class="feat-desc">Migration from legacy on-premises infrastructure to scalable hybrid cloud architectures</div></div>
+            <div class="feat-item"><div class="feat-name">Robotic process automation</div><div class="feat-desc">Automates prior auth, billing reconciliation, scheduling, and administrative workflows</div></div>
+            <div class="feat-item"><div class="feat-name">Workforce resilience tools</div><div class="feat-desc">AI burnout monitoring, staffing analytics, and long-term sustainability strategies</div></div>
+            <div class="feat-item"><div class="feat-name">Data governance &amp; AI readiness</div><div class="feat-desc">Real-time data quality scoring and semantic validation as prerequisite for AI deployment</div></div>
+          </div>
+          <div class="sec-lbl">Evidence-Based Outcomes</div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">Mayo Clinic Platform population reach (2025)</span><span class="ev-value">55 million people</span></div><div class="bar-track"><div class="bar-fill" data-width="55"></div></div></div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">Hospitals engaged in all 4 FHIR exchange domains</span><span class="ev-value">43% (15pp gain since 2018)</span></div><div class="bar-track"><div class="bar-fill" data-width="43"></div></div></div>
+          <div class="evidence-item"><div class="ev-header"><span class="ev-label">62% of hospitals exposed to PHI lineage gaps under legacy integrations</span><span class="ev-value">Critical risk</span></div><div class="bar-track"><div class="bar-fill" data-width="62"></div></div></div>
+          <div class="sec-lbl">Key Players</div>
+          <div class="players-wrap">
+            <span class="player-tag">Mayo Clinic Platform</span><span class="player-tag">Epic Systems</span><span class="player-tag">Oracle Health</span><span class="player-tag">Microsoft Health</span><span class="player-tag">Siemens Healthineers</span><span class="player-tag">Philips Healthcare</span><span class="player-tag">HIMSS Analytics</span>
+          </div>
+          <div class="sec-lbl">Organizational Impact</div>
+          <div class="impact-list">
+            <div class="impact-row"><div class="impact-icon">✓</div>Reduces total cost of ownership by eliminating fragmented point-solution sprawl</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>Builds the data foundation that all AI and analytics investments depend upon</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>Organizations shifting to Chief AI Officer roles and formal AI Governance Boards in 2026</div>
+            <div class="impact-row"><div class="impact-icon">✓</div>Ransomware defense posture now a board-level fiduciary responsibility, not IT discretion</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ====== COMPARE VIEW ====== -->
+  <div id="view-compare">
+    <div style="overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:16px;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Technology</th>
+            <th>Market 2025</th>
+            <th>CAGR</th>
+            <th>Evidence Strength</th>
+            <th>Maturity</th>
+            <th>Org. Complexity</th>
+            <th>Primary Benefit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="tech-name-cell" style="color:var(--gold)">① Ambient Clinical Intelligence</td>
+            <td>$7.24B</td>
+            <td style="color:var(--green)">22.85%</td>
+            <td><div class="dot-score"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot empty"></div></div></td>
+            <td><div class="dot-score"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot empty"></div><div class="dot empty"></div></div></td>
+            <td style="color:var(--coral)">Medium–High</td>
+            <td>Clinician efficiency</td>
+          </tr>
+          <tr>
+            <td class="tech-name-cell" style="color:var(--blue)">② AI-CDSS</td>
+            <td>$2.8B</td>
+            <td style="color:var(--green)">20.89%</td>
+            <td><div class="dot-score"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div></td>
+            <td><div class="dot-score"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot empty"></div></div></td>
+            <td style="color:var(--teal)">Medium</td>
+            <td>Patient safety &amp; outcomes</td>
+          </tr>
+          <tr>
+            <td class="tech-name-cell" style="color:var(--coral)">③ FHIR Interoperability</td>
+            <td>$34.96B (2032)</td>
+            <td style="color:var(--green)">~14%</td>
+            <td><div class="dot-score"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot empty"></div></div></td>
+            <td><div class="dot-score"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div></td>
+            <td style="color:var(--coral)">High</td>
+            <td>Data foundation / AI enablement</td>
+          </tr>
+          <tr>
+            <td class="tech-name-cell" style="color:var(--teal)">④ Predictive Analytics / PHM</td>
+            <td>$3.6B</td>
+            <td style="color:var(--green)">~24%</td>
+            <td><div class="dot-score"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot empty"></div></div></td>
+            <td><div class="dot-score"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot empty"></div></div></td>
+            <td style="color:var(--teal)">Medium</td>
+            <td>Cost reduction / VBC performance</td>
+          </tr>
+          <tr>
+            <td class="tech-name-cell" style="color:var(--violet)">⑤ EHR Optimization &amp; Partnerships</td>
+            <td>~$6T (US total)</td>
+            <td style="color:var(--gold)">11.83%</td>
+            <td><div class="dot-score"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot empty"></div><div class="dot empty"></div></div></td>
+            <td><div class="dot-score"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div></td>
+            <td style="color:var(--teal)">Low–Medium</td>
+            <td>Governance / infrastructure ROI</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:16px;font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace">Evidence strength &amp; maturity rated 1–5 dots. Sources: HIMSS, ONC, SNS Insider, DataM Intelligence, Grand View Research, Healthcare IT News · May 2026</div>
+  </div>
+
+  <!-- ====== TRENDS VIEW ====== -->
+  <div id="view-trends">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;">
+
+      <div class="trend-item">
+        <div class="trend-num">01</div>
+        <div class="trend-body">
+          <div class="trend-title">AI is moving from innovation to infrastructure</div>
+          <div class="trend-desc">In 2026, healthcare organizations are no longer asking whether to adopt AI — they're asking how to deploy it responsibly at scale. The defining shift is from pilot programs to enterprise-wide governance. Chief AI Officers and formal AI Governance Boards are appearing across health systems. Investment in AI readiness — data quality, FHIR pipelines, cloud infrastructure — is now a board-level priority.</div>
+          <span class="trend-tag" style="background:rgba(201,168,76,0.12);color:var(--gold);border:1px solid rgba(201,168,76,0.25)">Strategic priority</span>
+        </div>
+      </div>
+
+      <div class="trend-item">
+        <div class="trend-num">02</div>
+        <div class="trend-body">
+          <div class="trend-title">Clinician burnout is the #1 forcing function for AI adoption</div>
+          <div class="trend-desc">Administrative burden — particularly EHR documentation — is the dominant driver behind ambient AI investment. Physicians spending 2+ hours per day on documentation are an unsustainable cost. ACI platforms that demonstrably free 35 minutes per clinician per day are seeing accelerated procurement cycles, often bypassing standard IT evaluation timelines. This trend is expected to drive 300%+ growth in AI documentation adoption by end of 2026.</div>
+          <span class="trend-tag" style="background:rgba(45,212,191,0.1);color:var(--teal);border:1px solid rgba(45,212,191,0.2)">Burnout-driven adoption</span>
+        </div>
+      </div>
+
+      <div class="trend-item">
+        <div class="trend-num">03</div>
+        <div class="trend-body">
+          <div class="trend-title">FHIR is crossing the tipping point — from compliance to competitive advantage</div>
+          <div class="trend-desc">With 92% of EHR vendors now supporting FHIR R4, interoperability has shifted from a regulatory burden to a strategic enabler. Early TEFCA adopters are using real-time data exchange as a competitive differentiator — enabling faster care coordination, AI-ready data pipelines, and stronger payer negotiations. FHIR R6 is expected in late 2026, bringing normative stability to most clinical resources.</div>
+          <span class="trend-tag" style="background:rgba(251,113,133,0.12);color:var(--coral);border:1px solid rgba(251,113,133,0.2)">Infrastructure mandate</span>
+        </div>
+      </div>
+
+      <div class="trend-item">
+        <div class="trend-num">04</div>
+        <div class="trend-body">
+          <div class="trend-title">Value-based care is the dominant commercial model for Health IT</div>
+          <div class="trend-desc">Every major Health IT investment in 2026 must justify itself against value-based care metrics. Predictive analytics, population health management, and CDSS tools are being evaluated primarily on their ability to reduce avoidable admissions, improve HEDIS scores, and generate CMS quality payment upside. Organizations without AI-driven population health capabilities are facing systematic disadvantage in ACO and MSSP contract negotiations.</div>
+          <span class="trend-tag" style="background:rgba(74,222,128,0.08);color:var(--green);border:1px solid rgba(74,222,128,0.15)">VBC-aligned</span>
+        </div>
+      </div>
+
+      <div class="trend-item">
+        <div class="trend-num">05</div>
+        <div class="trend-body">
+          <div class="trend-title">Strategic partnerships are replacing point-solution procurement</div>
+          <div class="trend-desc">Healthcare IT leaders in 2026 are consolidating vendor relationships around 2–3 deep strategic partners rather than managing 15–20 point solutions. Strong partners must now offer integrated AI, EHR optimization, cloud, security, and interoperability expertise under a single accountability model. This reflects the recognition that fragmented tools cannot deliver the coordinated data governance that modern AI initiatives require.</div>
+          <span class="trend-tag" style="background:rgba(167,139,250,0.1);color:var(--violet);border:1px solid rgba(167,139,250,0.2)">Governance evolution</span>
+        </div>
+      </div>
+
+      <div class="trend-item" style="border-bottom:none">
+        <div class="trend-num">06</div>
+        <div class="trend-body">
+          <div class="trend-title">Cybersecurity has become a clinical continuity issue</div>
+          <div class="trend-desc">Ransomware attacks on health systems are no longer an IT risk — they are patient safety events. In 2026, segmentation, immutable backups, and zero-trust architecture are baseline requirements for any health system seeking cyber liability insurance or CMS participation. Workforce security training and incident response simulation have become standard operating procedure at leading health systems globally.</div>
+          <span class="trend-tag" style="background:rgba(251,113,133,0.12);color:var(--coral);border:1px solid rgba(251,113,133,0.2)">Patient safety imperative</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-label">Sources: HIMSS Global 2026 · SNS Insider · DataM Intelligence · Grand View Research · ONC · HealthIT News · Healthcare IT News · EHR Source · Med Tech Solutions · JAMA Informatics</div>
+    <div class="footer-label">Research Brief · May 31, 2026</div>
+  </footer>
+
+</div>
+
+<script>
+function showView(name) {
+  ['overview','technologies','compare','trends'].forEach(v => {
+    const el = document.getElementById('view-' + v);
+    if (el) el.classList.remove('active-view');
+  });
+  const target = document.getElementById('view-' + name);
+  if (target) target.classList.add('active-view');
+
+  document.querySelectorAll('.nav-tab').forEach((btn, i) => {
+    btn.classList.remove('active');
+    const map = ['overview','technologies','compare','trends'];
+    if (map[i] === name) btn.classList.add('active');
+  });
+}
+
+function toggleCard(id) {
+  const card = document.getElementById(id);
+  const body = document.getElementById('body-' + id);
+  if (!card || !body) return;
+  const isOpen = card.classList.contains('expanded');
+  card.classList.toggle('expanded', !isOpen);
+  body.classList.toggle('open', !isOpen);
+  if (!isOpen) {
+    // animate bars
+    setTimeout(() => {
+      body.querySelectorAll('.bar-fill[data-width]').forEach(bar => {
+        bar.style.width = bar.dataset.width + '%';
+      });
+    }, 50);
+  }
+}
+
+// Keyboard accessibility for cards
+document.querySelectorAll('.tech-card-header').forEach(header => {
+  header.setAttribute('tabindex', '0');
+  header.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      header.click();
+    }
+  });
+});
+</script>
+</body>
+</html>
