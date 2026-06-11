@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Standards & Evidence Framework — EverTails Lab</title>
+<meta name="description" content="WARDWISE is built on the world's leading clinical, simulation, and informatics standards. Every scenario, assessment, and AI feature is grounded in published international evidence.">
+<meta property="og:title" content="Standards & Evidence Framework — EverTails Lab">
+<meta property="og:description" content="Every clinical scenario in WARDWISE is validated against the most current published international guidelines across cardiac, respiratory, sepsis, metabolic, neurological, and obstetric care.">
+<meta property="og:url" content="https://evertailslab.com/standards">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-deep:    #070a12;
+    --bg-mid:     #0d1120;
+    --bg-light:   #141928;
+    --bg-surface: #1b2236;
+    --bg-card:    #1f2840;
+    --white:      #ffffff;
+    --text-soft:  rgba(255,255,255,0.75);
+    --text-muted: rgba(255,255,255,0.45);
+    --text-faint: rgba(255,255,255,0.18);
+    --border:     rgba(255,255,255,0.07);
+    --border-hover: rgba(255,255,255,0.22);
+    --accent:     #0047AB;
+    --accent-bright: #1a6fd4;
+    --font-display: 'DM Serif Display', serif;
+    --font-body:    'DM Sans', sans-serif;
+    --radius-sm:  6px;
+    --radius-md:  12px;
+    --radius-lg:  20px;
+    --radius-xl:  32px;
+    --shadow-sm:  0 2px 12px rgba(0,0,0,0.3);
+    --shadow-md:  0 8px 36px rgba(0,0,0,0.4);
+    --shadow-lg:  0 24px 72px rgba(0,0,0,0.55);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    color: var(--white);
+    background: var(--bg-deep);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 18px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(7,10,18,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-mark img {
+    height: 38px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .logo-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+  .logo-wordmark .brand { font-family: var(--font-display); font-size: 17px; color: #7ECEC4; letter-spacing: -0.3px; }
+  .logo-wordmark .sub   { font-size: 10px; font-weight: 300; color: var(--text-muted); letter-spacing: 1.8px; text-transform: uppercase; }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.2px;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a.active { color: var(--white); }
+
+  .nav-cta {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: var(--bg-deep) !important;
+    background: var(--white) !important;
+    padding: 8px 20px;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s, transform 0.15s !important;
+  }
+
+  .nav-cta:hover { background: var(--accent-bright) !important; color: var(--white) !important; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .page-hero {
+    padding: 160px 48px 80px;
+    background: linear-gradient(135deg, #070a12 0%, #0b1a3b 40%, #0d2460 65%, #070a12 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,71,171,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .page-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .hero-inner {
+    max-width: 820px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .page-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 58px);
+    line-height: 1.1;
+    color: var(--white);
+    letter-spacing: -1.2px;
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+
+  .page-hero h1 em {
+    font-style: italic;
+    color: var(--accent-bright);
+  }
+
+  .hero-body {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text-soft);
+    max-width: 680px;
+  }
+
+  /* ── SHARED SECTION ── */
+  .standards-section {
+    padding: 80px 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .standards-section:last-of-type { border-bottom: none; }
+  .standards-section:nth-child(even) { background: var(--bg-mid); }
+  .standards-section:nth-child(odd)  { background: var(--bg-deep); }
+
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3vw, 36px);
+    line-height: 1.2;
+    color: var(--white);
+    letter-spacing: -0.6px;
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+
+  .section-desc {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text-soft);
+    max-width: 640px;
+  }
+
+  /* ── STANDARDS GRID ── */
+  .standards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .standard-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px 26px;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .standard-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--card-accent, var(--accent));
+    border-radius: 3px 0 0 3px;
+  }
+
+  .standard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-hover);
+  }
+
+  .card-specialty {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--card-color, var(--accent-bright));
+    margin-bottom: 2px;
+  }
+
+  .card-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.4;
+  }
+
+  .card-body-name {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .card-year {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding: 3px 8px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+
+  /* Accent colour per section */
+  .section-cardiac  .standard-card { --card-accent: #ef4444; --card-color: #fca5a5; }
+  .section-resp     .standard-card { --card-accent: #3b82f6; --card-color: #93c5fd; }
+  .section-sepsis   .standard-card { --card-accent: #f59e0b; --card-color: #fcd34d; }
+  .section-metabolic .standard-card{ --card-accent: #10b981; --card-color: #6ee7b7; }
+  .section-neuro    .standard-card { --card-accent: #8b5cf6; --card-color: #c4b5fd; }
+  .section-obstetric .standard-card{ --card-accent: #ec4899; --card-color: #f9a8d4; }
+  .section-nursing  .standard-card { --card-accent: #0047AB; --card-color: #93c5fd; }
+  .section-sim      .standard-card { --card-accent: #7ECEC4; --card-color: #7ECEC4; }
+  .section-informatics .standard-card{ --card-accent: #6366f1; --card-color: #a5b4fc; }
+  .section-regulatory .standard-card{ --card-accent: #14b8a6; --card-color: #5eead4; }
+
+  /* ── FULL-WIDTH CLINICAL SECTION ── */
+  .clinical-intro {
+    padding: 80px 48px 40px;
+    background: var(--bg-mid);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .clinical-intro-inner {
+    max-width: 820px;
+  }
+
+  /* ── SPECIALTY DIVIDER ── */
+  .specialty-block {
+    padding: 40px 48px;
+    background: var(--bg-mid);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .specialty-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .specialty-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── DISCLAIMER ── */
+  .disclaimer {
+    padding: 56px 48px;
+    background: var(--bg-light);
+  }
+
+  .disclaimer-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .disclaimer-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .disclaimer-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+
+  .disclaimer-text {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text-muted);
+  }
+
+  /* ── CTA ── */
+  .standards-cta {
+    padding: 80px 48px;
+    background: var(--bg-deep);
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .cta-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 42px);
+    color: var(--white);
+    letter-spacing: -0.8px;
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .cta-body {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text-soft);
+    max-width: 480px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+  }
+
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--bg-deep);
+    background: var(--white);
+    padding: 14px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-bright);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 14px 0;
+    transition: color 0.2s;
+  }
+
+  .btn-outline:hover { color: var(--white); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg-mid);
+    padding: 64px 48px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 1.4fr 2fr;
+    gap: 80px;
+    margin-bottom: 40px;
+    max-width: 1100px;
+  }
+
+  .footer-tagline {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-top: 16px;
+    max-width: 240px;
+  }
+
+  .footer-cols {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .footer-col-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 16px;
+  }
+
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .footer-links a {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1100px;
+  }
+
+  .footer-copy { font-size: 12px; font-weight: 300; color: var(--text-faint); }
+  .footer-note { font-size: 12px; font-weight: 300; color: var(--text-faint); }
+
+  /* ── FADE UP ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .page-hero { padding: 130px 24px 60px; }
+    .standards-section { padding: 60px 24px; }
+    .specialty-block { padding: 32px 24px; }
+    .clinical-intro { padding: 60px 24px 32px; }
+    .disclaimer { padding: 48px 24px; }
+    .standards-cta { padding: 60px 24px; }
+    footer { padding: 48px 24px 0; }
+    .footer-inner { grid-template-columns: 1fr; gap: 40px; }
+    .footer-cols { grid-template-columns: repeat(2, 1fr); }
+    .footer-bottom { flex-direction: column; gap: 6px; text-align: center; }
+    .standards-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-mark">
+      <img src="Evertailslogo.png" alt="EverTails Lab" onerror="this.style.display='none'">
+    </div>
+    <div class="logo-wordmark">
+      <span class="brand">EverTails Lab</span>
+      <span class="sub">Healthcare Innovation</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#mission">Mission</a></li>
+    <li><a href="index.html#products">Products</a></li>
+    <li><a href="wardwise.html">WARDWISE</a></li>
+    <li><a href="carelog.html">CareLog</a></li>
+    <li><a href="standards.html" class="active">Standards</a></li>
+    <li><a href="index.html#contact" class="nav-cta">Get in Touch</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <div class="section-eyebrow">Standards &amp; Evidence Framework</div>
+    <h1>Built on the world's<br><em>leading evidence.</em></h1>
+    <p class="hero-body">Every clinical scenario, learning objective, and assessment in WARDWISE is designed and validated against the published guidelines, frameworks, and research of globally recognised authorities in clinical practice, nursing education, simulation science, health informatics, and artificial intelligence in healthcare.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     SECTION 1 — CLINICAL PRACTICE
+     ═══════════════════════════════════ -->
+<section class="standards-section" id="clinical">
+  <div class="section-header fade-up">
+    <div class="section-eyebrow">Section 1</div>
+    <h2 class="section-title">Clinical Practice Guidelines</h2>
+    <p class="section-desc">All 52 WARDWISE clinical scenarios are designed and validated against the most current published evidence in each specialty. Scenarios are reviewed whenever major guideline revisions are issued by the issuing body.</p>
+  </div>
+
+  <!-- Cardiac -->
+  <div class="specialty-block" style="padding:0 0 16px; background:transparent; border:none;">
+    <div class="specialty-label section-cardiac">Cardiac</div>
+    <div class="standards-grid section-cardiac fade-up">
+      <div class="standard-card">
+        <span class="card-specialty">Cardiac</span>
+        <div class="card-name">AHA/ACC Heart Failure Guidelines</div>
+        <div class="card-body-name">American Heart Association / American College of Cardiology</div>
+        <span class="card-year">2022</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Cardiac</span>
+        <div class="card-name">AHA/ACC STEMI Management Guidelines</div>
+        <div class="card-body-name">American Heart Association / American College of Cardiology</div>
+        <span class="card-year">2023</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Cardiac</span>
+        <div class="card-name">AHA/ACC Atrial Fibrillation Guidelines</div>
+        <div class="card-body-name">American Heart Association / American College of Cardiology</div>
+        <span class="card-year">2023</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Cardiac</span>
+        <div class="card-name">AHA/ACC Valvular Heart Disease Guidelines</div>
+        <div class="card-body-name">American Heart Association / American College of Cardiology</div>
+        <span class="card-year">2021</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Cardiac</span>
+        <div class="card-name">SCAI Cardiogenic Shock Classification</div>
+        <div class="card-body-name">Society for Cardiovascular Angiography and Interventions</div>
+        <span class="card-year">2019 / Updated 2022</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Cardiac</span>
+        <div class="card-name">ESC Pericardial Disease Guidelines</div>
+        <div class="card-body-name">European Society of Cardiology</div>
+        <span class="card-year">2015</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Respiratory -->
+  <div class="specialty-block" style="padding:32px 0 16px; background:transparent; border:none;">
+    <div class="specialty-label section-resp">Respiratory</div>
+    <div class="standards-grid section-resp fade-up">
+      <div class="standard-card">
+        <span class="card-specialty">Respiratory</span>
+        <div class="card-name">GOLD COPD Guidelines</div>
+        <div class="card-body-name">Global Initiative for Chronic Obstructive Lung Disease</div>
+        <span class="card-year">2023</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Respiratory</span>
+        <div class="card-name">GINA Asthma Guidelines</div>
+        <div class="card-body-name">Global Initiative for Asthma</div>
+        <span class="card-year">2023</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Respiratory</span>
+        <div class="card-name">IDSA Community-Acquired Pneumonia Guidelines</div>
+        <div class="card-body-name">Infectious Diseases Society of America / ATS</div>
+        <span class="card-year">2019</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Respiratory</span>
+        <div class="card-name">AHA/ASA Pulmonary Embolism Guidelines</div>
+        <div class="card-body-name">American Heart Association / ESC</div>
+        <span class="card-year">2019</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Respiratory</span>
+        <div class="card-name">ARDSnet Lung-Protective Ventilation Protocol</div>
+        <div class="card-body-name">ARDS Network — NEJM Low Tidal Volume Trial</div>
+        <span class="card-year">2000 / Berlin Definition 2012</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sepsis -->
+  <div class="specialty-block" style="padding:32px 0 16px; background:transparent; border:none;">
+    <div class="specialty-label section-sepsis">Sepsis</div>
+    <div class="standards-grid section-sepsis fade-up">
+      <div class="standard-card">
+        <span class="card-specialty">Sepsis</span>
+        <div class="card-name">Surviving Sepsis Campaign Guidelines</div>
+        <div class="card-body-name">Society of Critical Care Medicine / European Society of Intensive Care Medicine</div>
+        <span class="card-year">2021</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Sepsis</span>
+        <div class="card-name">Hour-1 Bundle for Sepsis Management</div>
+        <div class="card-body-name">Surviving Sepsis Campaign</div>
+        <span class="card-year">2018 / Revised 2021</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Sepsis</span>
+        <div class="card-name">IDSA Bacterial Meningitis Guidelines</div>
+        <div class="card-body-name">Infectious Diseases Society of America</div>
+        <span class="card-year">2004 / Updated 2017</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metabolic -->
+  <div class="specialty-block" style="padding:32px 0 16px; background:transparent; border:none;">
+    <div class="specialty-label section-metabolic">Metabolic / Endocrine</div>
+    <div class="standards-grid section-metabolic fade-up">
+      <div class="standard-card">
+        <span class="card-specialty">Metabolic</span>
+        <div class="card-name">ADA Standards of Care in Diabetes — DKA &amp; HHS</div>
+        <div class="card-body-name">American Diabetes Association</div>
+        <span class="card-year">2023</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Metabolic</span>
+        <div class="card-name">KDIGO AKI Guidelines</div>
+        <div class="card-body-name">Kidney Disease Improving Global Outcomes</div>
+        <span class="card-year">2012 / Updated 2023</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Metabolic</span>
+        <div class="card-name">ATA Thyroid Storm Guidelines</div>
+        <div class="card-body-name">American Thyroid Association</div>
+        <span class="card-year">2016</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Metabolic</span>
+        <div class="card-name">Endocrine Society Adrenal Crisis Guidelines</div>
+        <div class="card-body-name">Endocrine Society</div>
+        <span class="card-year">2016</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Metabolic</span>
+        <div class="card-name">European Hyponatraemia Guidelines</div>
+        <div class="card-body-name">European Journal of Endocrinology</div>
+        <span class="card-year">2014 / Updated 2022</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Metabolic</span>
+        <div class="card-name">ACC/AHA Hyperkalaemia Management Guidelines</div>
+        <div class="card-body-name">American College of Cardiology / NICE</div>
+        <span class="card-year">2020</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Neurological -->
+  <div class="specialty-block" style="padding:32px 0 16px; background:transparent; border:none;">
+    <div class="specialty-label section-neuro">Neurological</div>
+    <div class="standards-grid section-neuro fade-up">
+      <div class="standard-card">
+        <span class="card-specialty">Neurological</span>
+        <div class="card-name">AHA/ASA Acute Ischaemic Stroke Guidelines</div>
+        <div class="card-body-name">American Heart Association / American Stroke Association</div>
+        <span class="card-year">2019 / Updated 2022</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Neurological</span>
+        <div class="card-name">AHA/ASA Intracerebral Haemorrhage Guidelines</div>
+        <div class="card-body-name">American Heart Association / American Stroke Association</div>
+        <span class="card-year">2022</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Neurological</span>
+        <div class="card-name">AES Status Epilepticus Guidelines</div>
+        <div class="card-body-name">American Epilepsy Society — ESETT Trial Evidence</div>
+        <span class="card-year">2016</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Neurological</span>
+        <div class="card-name">PADIS ICU Delirium Guidelines</div>
+        <div class="card-body-name">Society of Critical Care Medicine — Pain, Agitation, Delirium, Immobility, Sleep</div>
+        <span class="card-year">2018</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Obstetric -->
+  <div class="specialty-block" style="padding:32px 0 0; background:transparent; border:none;">
+    <div class="specialty-label section-obstetric">Obstetric</div>
+    <div class="standards-grid section-obstetric fade-up">
+      <div class="standard-card">
+        <span class="card-specialty">Obstetric</span>
+        <div class="card-name">ACOG Preeclampsia Practice Bulletin 222</div>
+        <div class="card-body-name">American College of Obstetricians and Gynecologists</div>
+        <span class="card-year">2020</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Obstetric</span>
+        <div class="card-name">ACOG Postpartum Haemorrhage Guidelines</div>
+        <div class="card-body-name">American College of Obstetricians and Gynecologists</div>
+        <span class="card-year">2017</span>
+      </div>
+      <div class="standard-card">
+        <span class="card-specialty">Obstetric</span>
+        <div class="card-name">WHO Obstetric Emergency Guidelines</div>
+        <div class="card-body-name">World Health Organization</div>
+        <span class="card-year">2023</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     SECTION 2 — NURSING EDUCATION & SIMULATION
+     ═══════════════════════════════════ -->
+<section class="standards-section" id="education" style="background: var(--bg-mid);">
+  <div class="section-header fade-up">
+    <div class="section-eyebrow">Section 2</div>
+    <h2 class="section-title">Nursing Education &amp; Simulation Design</h2>
+    <p class="section-desc">Clinical scenario pedagogy, learning objectives, debriefing frameworks, and assessment design are grounded in the following educational standards and evidence-based frameworks.</p>
+  </div>
+  <div class="standards-grid section-sim fade-up">
+    <div class="standard-card">
+      <span class="card-specialty">Clinical Judgment</span>
+      <div class="card-name">NCSBN Clinical Judgment Measurement Model (CJMM)</div>
+      <div class="card-body-name">National Council of State Boards of Nursing — NGN/NCLEX Alignment Framework. Authority: Donna D. Ignatavicius, MS, RN, CNE, CNEcl, ANEF, FAADN.</div>
+      <span class="card-year">NGN — Current Cycle</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">Simulation Design</span>
+      <div class="card-name">INACSL Standards of Best Practice: Simulation</div>
+      <div class="card-body-name">International Nursing Association for Clinical Simulation and Learning. Covers simulation design, facilitation, debriefing, and outcomes evaluation.</div>
+      <span class="card-year">2021</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">Debriefing</span>
+      <div class="card-name">PEARLS Debriefing Framework</div>
+      <div class="card-body-name">Promoting Excellence and Reflective Learning in Simulation. Structured post-simulation debriefing across Reactions, Events, Analysis, Learning, and Summary phases.</div>
+      <span class="card-year">Established Standard</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">Training Quality</span>
+      <div class="card-name">ISO 10015:2019 — Competence Management &amp; Training</div>
+      <div class="card-body-name">International Organization for Standardization. Guidelines for quality management of competence development and people development programmes.</div>
+      <span class="card-year">2019</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">Talent Development</span>
+      <div class="card-name">ATD Capability Model</div>
+      <div class="card-body-name">Association for Talent Development. Professional competency standard for learning and development practitioners worldwide.</div>
+      <span class="card-year">Current Edition</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">Outcomes Evaluation</span>
+      <div class="card-name">Kirkpatrick Model of Training Evaluation</div>
+      <div class="card-body-name">Kirkpatrick Partners. Four-level framework: Reaction, Learning, Behaviour, Results. The New World Kirkpatrick Model guides WARDWISE outcome assessment design.</div>
+      <span class="card-year">Updated Edition</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">Philippine Nursing</span>
+      <div class="card-name">ANA Scope and Standards of Practice</div>
+      <div class="card-body-name">American Nurses Association. Governs WARDWISE assessment scoring and clinical decision-making framework for Philippine and international nursing standards.</div>
+      <span class="card-year">4th Edition</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">Philippine Nursing</span>
+      <div class="card-name">NNCCS 2012 — National Nursing Core Competency Standards</div>
+      <div class="card-body-name">Philippine Nursing Act — Professional Regulation Commission. Governs all competency frameworks applied to the Philippine nursing market.</div>
+      <span class="card-year">2012</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     SECTION 3 — HEALTH INFORMATICS & AI
+     ═══════════════════════════════════ -->
+<section class="standards-section" id="informatics">
+  <div class="section-header fade-up">
+    <div class="section-eyebrow">Section 3</div>
+    <h2 class="section-title">Health Informatics &amp; AI for Healthcare</h2>
+    <p class="section-desc">Platform architecture, data governance, and AI feature design are informed by the following international standards and published research frameworks from leading health informatics and AI institutions.</p>
+  </div>
+  <div class="standards-grid section-informatics fade-up">
+    <div class="standard-card">
+      <span class="card-specialty">Information Security</span>
+      <div class="card-name">ISO/IEC 27001:2022 — Information Security Management</div>
+      <div class="card-body-name">International Organization for Standardization / International Electrotechnical Commission. The global standard for information security management systems.</div>
+      <span class="card-year">2022</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">Software Quality</span>
+      <div class="card-name">ISO/IEC 25010:2023 — Software Quality Requirements</div>
+      <div class="card-body-name">International Organization for Standardization. Systems and software quality requirements and evaluation (SQuaRE).</div>
+      <span class="card-year">2023</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">Accessibility</span>
+      <div class="card-name">WCAG 2.1 AA — Web Content Accessibility Guidelines</div>
+      <div class="card-body-name">World Wide Web Consortium (W3C). Platform accessibility standard for all WARDWISE user interfaces.</div>
+      <span class="card-year">Level AA</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">Responsible AI</span>
+      <div class="card-name">Coalition for Health AI (CHAI) Guidelines</div>
+      <div class="card-body-name">CHAI — Stanford / Microsoft / Partners. Framework for the responsible development and deployment of AI in healthcare settings.</div>
+      <span class="card-year">Current</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">Data Governance</span>
+      <div class="card-name">FAIR Data Principles</div>
+      <div class="card-body-name">Wilkinson et al. / GO FAIR Initiative. Findable, Accessible, Interoperable, Reusable — the foundational principles governing WARDWISE health data architecture.</div>
+      <span class="card-year">2016 / Current</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">Interoperability</span>
+      <div class="card-name">HL7 FHIR R4 — Healthcare Interoperability Standard</div>
+      <div class="card-body-name">Health Level Seven International. Fast Healthcare Interoperability Resources — the foundational standard for healthcare data exchange and institutional integration.</div>
+      <span class="card-year">R4 / R4B</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     SECTION 4 — REGULATORY COMPLIANCE
+     ═══════════════════════════════════ -->
+<section class="standards-section" id="regulatory" style="background: var(--bg-mid);">
+  <div class="section-header fade-up">
+    <div class="section-eyebrow">Section 4</div>
+    <h2 class="section-title">Regulatory &amp; Compliance Frameworks</h2>
+    <p class="section-desc">WARDWISE is designed for institutional use in the Philippines and the United Arab Emirates. Platform design and data handling are aligned with the following regulatory frameworks.</p>
+  </div>
+  <div class="standards-grid section-regulatory fade-up">
+    <div class="standard-card">
+      <span class="card-specialty">Philippines</span>
+      <div class="card-name">RA 10173 — Data Privacy Act of the Philippines</div>
+      <div class="card-body-name">National Privacy Commission — Republic of the Philippines. Governs the collection, processing, and storage of personal and institutional data for all Philippine users.</div>
+      <span class="card-year">2012</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">Philippines</span>
+      <div class="card-name">CHED CMO No. 14 s. 2009 — BSN Nursing Education Standards</div>
+      <div class="card-body-name">Commission on Higher Education, Philippines. Governs Philippine BSN curriculum alignment, competency frameworks, and RLE documentation standards for CareLog.</div>
+      <span class="card-year">2009</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">UAE</span>
+      <div class="card-name">UAE Federal Data Protection Law</div>
+      <div class="card-body-name">UAE Ministry of Justice. Governs personal data processing and protection for all UAE-based institutional users of WARDWISE.</div>
+      <span class="card-year">2021</span>
+    </div>
+    <div class="standard-card">
+      <span class="card-specialty">UAE</span>
+      <div class="card-name">DOH Abu Dhabi — Clinical Competency Documentation</div>
+      <div class="card-body-name">Department of Health — Abu Dhabi. WARDWISE analytics and export formats are designed for compatibility with DOH institutional competency reporting requirements.</div>
+      <span class="card-year">Current</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     DISCLAIMER
+     ═══════════════════════════════════ -->
+<div class="disclaimer fade-up">
+  <div class="disclaimer-inner">
+    <div class="disclaimer-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+    </div>
+    <div class="disclaimer-title">A note on attribution</div>
+    <p class="disclaimer-text">WARDWISE does not claim endorsement by any of the organisations listed on this page. These standards, guidelines, and frameworks are publicly published references that inform our clinical content design, simulation pedagogy, and platform architecture. All clinical scenario content is reviewed against current versions of these guidelines and updated when major revisions are issued. EverTails Lab maintains full accountability for all content published within the platform.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════
+     CTA
+     ═══════════════════════════════════ -->
+<div class="standards-cta">
+  <h2 class="cta-title">See the standards in action.</h2>
+  <p class="cta-body">Every WARDWISE scenario applies these guidelines at the decision level — not just as a reference list, but as the evidence base for every scored clinical action.</p>
+  <div class="cta-actions">
+    <a href="wardwise.html" class="btn-primary">Try WARDWISE →</a>
+    <a href="index.html#contact" class="btn-outline">Request a demo <span style="margin-left:4px;">→</span></a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div style="display:flex; align-items:center;">
+        <div class="logo-mark">
+          <img src="Evertailslogo.png" alt="EverTails Lab" onerror="this.style.display='none'">
+        </div>
+      </div>
+      <p class="footer-tagline">Building meaningful technologies for a stronger, safer healthcare world.</p>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <div class="footer-col-title">Products</div>
+        <ul class="footer-links">
+          <li><a href="wardwise.html">WARDWISE</a></li>
+          <li><a href="carelog.html">CareLog</a></li>
+          <li><a href="index.html#products">Roadmap</a></li>
+          <li><a href="index.html#contact">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="index.html#mission">Mission</a></li>
+          <li><a href="index.html#values">Values</a></li>
+          <li><a href="standards.html">Standards</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Media</div>
+        <ul class="footer-links">
+          <li><a href="index.html#media">YouTube</a></li>
+          <li><a href="index.html#media">Podcast</a></li>
+          <li><a href="index.html#blog">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="mailto:jennifer@evertailslab.com">jennifer@evertailslab.com</a></li>
+          <li><a href="index.html#contact">Philippines</a></li>
+          <li><a href="index.html#contact">Abu Dhabi, UAE</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 EverTails Lab. All rights reserved.</span>
+    <span class="footer-note">Built with integrity. Deployed with care.</span>
+  </div>
+</footer>
+
+<script>
+// Fade-in on scroll
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(function(el) { observer.observe(el); });
+
+// Nav shadow on scroll
+window.addEventListener('scroll', function() {
+  document.querySelector('nav').style.boxShadow =
+    window.scrollY > 20 ? '0 4px 32px rgba(0,0,0,0.4)' : 'none';
+});
+</script>
+</body>
+</html>
